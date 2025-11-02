@@ -4,7 +4,7 @@ import type { User, Building, Room, Booking, Message, Transaction, Conversation,
 
 // --- MOCK DATA (Fully defined with IDs) ---
 
-export const mockUsers: WithId<Omit<User, 'id' | 'dateJoined'>>[] = [
+export const mockUsers: WithId<Omit<User, 'id' | 'dateJoined'>>[] & { password?: string }[] = [
   {
     id: 'user-1',
     name: 'Alex Tenant',
@@ -16,6 +16,7 @@ export const mockUsers: WithId<Omit<User, 'id' | 'dateJoined'>>[] = [
     profilePicture: 'https://i.pravatar.cc/150?u=alex-tenant',
     whatsapp: '+1234567890',
     role: 'tenant',
+    password: 'password',
   },
   {
     id: 'user-2',
@@ -28,6 +29,7 @@ export const mockUsers: WithId<Omit<User, 'id' | 'dateJoined'>>[] = [
     profilePicture: 'https://i.pravatar.cc/150?u=brian-landlord',
     whatsapp: '+1987654321',
     role: 'landlord',
+    password: 'password',
   },
 ];
 
