@@ -64,7 +64,7 @@ if (require.main === module) {
         console.log('- No users to delete from Firebase Auth.');
       }
     } catch (error) {
-      console.error('Error deleting auth users:', error);
+      console.error('Warning: Could not delete auth users. This might be a permissions issue. Check your Service Account roles in GCP IAM.', error);
     }
     
     // List of all top-level collections to be cleared
@@ -84,15 +84,19 @@ if (require.main === module) {
 
     // 1. Populate Users
     console.log('Populating users...');
-    await Promise.all(mockUsers.map(user => 
-        auth.createUser({
-            uid: user.id,
-            email: user.email,
-            password: user.password,
-            displayName: user.name,
-            photoURL: user.avatarUrl,
-        }).catch(error => console.error(`Error creating auth user ${user.name}:`, error))
-    ));
+    try {
+        await Promise.all(mockUsers.map(user => 
+            auth.createUser({
+                uid: user.id,
+                email: user.email,
+                password: user.password,
+                displayName: user.name,
+                photoURL: user.avatarUrl,
+            })
+        ));
+    } catch (error) {
+         console.error('Warning: Could not create auth users. This might be a permissions issue. Check your Service Account roles in GCP IAM.', error);
+    }
     
     const userBatch = db.batch();
     mockUsers.forEach(user => {
@@ -101,7 +105,7 @@ if (require.main === module) {
         userBatch.set(userRef, { ...userData, dateJoined: new Date().toISOString() });
     });
     await userBatch.commit();
-    console.log(`- Added ${mockUsers.length} users.`);
+    console.log(`- Added ${mockUsers.length} users to Firestore.`);
 
     // 2. Populate Buildings
     console.log('Populating buildings...');
