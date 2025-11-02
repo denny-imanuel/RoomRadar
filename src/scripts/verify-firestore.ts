@@ -1,7 +1,7 @@
 // To run this script, execute: `npm run db:verify`
 
 import admin from 'firebase-admin';
-import { firebaseConfig } from '../firebase/config';
+import { firebaseConfig } from '@/firebase/config';
 import path from 'path';
 import { 
     mockUsers, 
@@ -11,7 +11,7 @@ import {
     mockMessages, 
     mockTransactions,
     mockConversations
-} from '../lib/placeholder-data';
+} from '@/lib/placeholder-data';
 
 // IMPORTANT: Download your service account key from the Firebase console
 // and save it as `serviceAccountKey.json` in the root of your project.

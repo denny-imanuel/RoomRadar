@@ -1,7 +1,7 @@
 // To run this script, execute: `npm run db:populate`
 
 import admin from 'firebase-admin';
-import { firebaseConfig } from '../firebase/config';
+import { firebaseConfig } from '@/firebase/config';
 import path from 'path';
 import type { User, Building, Room, Booking, Message, Transaction, WithId, Conversation } from '../lib/types';
 import { 
@@ -12,7 +12,7 @@ import {
     mockMessages, 
     mockTransactions, 
     mockConversations 
-} from '../lib/placeholder-data';
+} from '@/lib/placeholder-data';
 
 
 // IMPORTANT: Download your service account key from the Firebase console

@@ -4,7 +4,7 @@ import { initializeApp } from "firebase/app";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
-const firebaseConfig = {
+export const firebaseConfig = {
   apiKey: "AIzaSyAliNBJRUrHVyNAr7Ekq9Pwg_kbxreuXr4",
   authDomain: "roomradar-60848015-ceb4e.firebaseapp.com",
   projectId: "roomradar-60848015-ceb4e",
