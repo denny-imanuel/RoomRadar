@@ -1,12 +1,13 @@
+
 'use server';
 
 import { Xendit } from 'xendit-node';
 import type { 
-    CreatePaymentRequestRequest, 
+    CreatePaymentRequest, 
     PaymentRequest,
     CreatePayoutRequest,
     Payout
-} from 'xendit-node/payment_request/models';
+} from 'xendit-node';
 import { v4 as uuidv4 } from 'uuid';
 
 // Make sure to set XENDIT_SECRET_KEY in your .env file
@@ -31,7 +32,7 @@ export async function createXenditPayment(
     channelCode: string
 ): Promise<PaymentRequest> {
     try {
-        const paymentRequestParams: CreatePaymentRequestRequest = {
+        const paymentRequestParams: CreatePaymentRequest = {
             amount,
             currency,
             country,
@@ -49,6 +50,22 @@ export async function createXenditPayment(
     } catch (error) {
         console.error('Error creating Xendit payment request:', error);
         throw new Error('Failed to create Xendit payment request.');
+    }
+}
+
+/**
+ * Retrieves the status of a Xendit Payment Request.
+ * @param paymentRequestId - The ID of the payment request to check.
+ * @returns The payment request object with its current status.
+ */
+export async function getXenditPaymentStatus(paymentRequestId: string): Promise<PaymentRequest> {
+    try {
+        const payment = await PRP.getPaymentRequest({ paymentRequestId });
+        console.log('Xendit Payment Request status:', payment);
+        return payment;
+    } catch (error) {
+        console.error('Error getting Xendit payment request status:', error);
+        throw new Error('Failed to get Xendit payment request status.');
     }
 }
 
@@ -82,5 +99,21 @@ export async function createXenditPayout(
     } catch (error) {
         console.error('Error creating Xendit payout:', error);
         throw new Error('Failed to create Xendit payout.');
+    }
+}
+
+/**
+ * Retrieves the status of a Xendit Payout.
+ * @param payoutId - The ID of the payout to check.
+ * @returns The payout object with its current status.
+ */
+export async function getXenditPayoutStatus(payoutId: string): Promise<Payout> {
+    try {
+        const payout = await PayoutP.getPayout({ payoutId });
+        console.log('Xendit Payout status:', payout);
+        return payout;
+    } catch (error) {
+        console.error('Error getting Xendit payout status:', error);
+        throw new Error('Failed to get Xendit payout status.');
     }
 }
