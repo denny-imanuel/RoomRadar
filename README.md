@@ -20,11 +20,11 @@ npm install
 
 The application requires API keys for Google Maps and Xendit.
 
-1.  Rename the `.env.local.example` file to `.env.local`.
-2.  Open the `.env.local` file and add your secret keys.
+1.  Create a new file named `.env` in the root of the project.
+2.  Open the `.env` file and add your secret keys.
 
 ```
-# .env.local
+# .env
 
 # Get your key from the Google Cloud Console: https://console.cloud.google.com/google/maps-apis/
 NEXT_PUBLIC_GOOGLE_MAPS_API_KEY="YOUR_GOOGLE_MAPS_API_KEY"
@@ -42,8 +42,8 @@ The project includes a script to populate your Firestore database with mock data
 1.  Go to your [Firebase Console](https://console.firebase.google.com/).
 2.  Select your project, go to **Project settings** (gear icon) > **Service accounts**.
 3.  Click **"Generate new private key"** and confirm. A JSON file will be downloaded.
-4.  Rename this file to `serivceAccountKey.json`.
-5.  Move the `serivceAccountKey.json` file to the root directory of this project. **Important**: This file contains sensitive credentials. Do not commit it to version control. The `.gitignore` file is already configured to ignore it.
+4.  Rename this file to `serviceAccountKey.json`.
+5.  Move the `serviceAccountKey.json` file to the root directory of this project. **Important**: This file contains sensitive credentials. Do not commit it to version control. The `.gitignore` file is already configured to ignore it.
 
 **Step 2: Run the Population Script**
 
@@ -53,7 +53,7 @@ Once the service account key is in place, run the following command from your te
 npm run db:populate
 ```
 
-This will execute the script at `scripts/populate-firestore.ts`, which writes mock data to your Firestore database.
+This will execute the script at `src/scripts/populate-firestore.ts`, which writes mock data to your Firestore database.
 
 ### 4. Running for Development
 

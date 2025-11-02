@@ -16,9 +16,9 @@ import {
 
 
 // IMPORTANT: Download your service account key from the Firebase console
-// and save it as `serivceAccountKey.json` in the root of your project.
+// and save it as `serviceAccountKey.json` in the root of your project.
 // This file is git-ignored, so it won't be committed to your repository.
-const serviceAccount = require(path.resolve(process.cwd(), 'serivceAccountKey.json'));
+const serviceAccount = require(path.resolve(process.cwd(), 'serviceAccountKey.json'));
 
 // --- MAIN SCRIPT LOGIC ---
 

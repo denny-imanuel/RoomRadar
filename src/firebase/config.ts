@@ -1,14 +1,17 @@
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
-// This file contains the configuration for your Firebase project.
-// You can get this information from the Firebase console.
-// Go to Project settings > General tab, scroll down to "Your apps", and select the web app.
-
-export const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT_ID.appspot.com",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID",
-  measurementId: "YOUR_MEASUREMENT_ID"
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyAliNBJRUrHVyNAr7Ekq9Pwg_kbxreuXr4",
+  authDomain: "roomradar-60848015-ceb4e.firebaseapp.com",
+  projectId: "roomradar-60848015-ceb4e",
+  storageBucket: "roomradar-60848015-ceb4e.firebasestorage.app",
+  messagingSenderId: "363287981451",
+  appId: "1:363287981451:web:cca117749499e021e1538e"
 };
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);

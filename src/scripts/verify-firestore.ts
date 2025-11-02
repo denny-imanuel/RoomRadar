@@ -14,8 +14,8 @@ import {
 } from '../lib/placeholder-data';
 
 // IMPORTANT: Download your service account key from the Firebase console
-// and save it as `serivceAccountKey.json` in the root of your project.
-const serviceAccount = require(path.resolve(process.cwd(), 'serivceAccountKey.json'));
+// and save it as `serviceAccountKey.json` in the root of your project.
+const serviceAccount = require(path.resolve(process.cwd(), 'serviceAccountKey.json'));
 
 // Safely initialize the Firebase app, preventing duplicate app errors
 if (!admin.apps.length) {
