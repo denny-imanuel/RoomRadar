@@ -54,6 +54,15 @@ export const mockBookings: WithId<Booking>[] = [
   { id: 'booking-6', userId: 'user-1', roomId: 'room-3', buildingId: 'building-2', buildingName: 'Seaside Villas', buildingAddress: '789 Ocean Blvd, Beachtown, USA', roomName: 'Garden View Single', checkIn: '2024-09-01', checkOut: '2024-09-08', totalPrice: 562, imageUrl: 'https://picsum.photos/seed/bldg3-room1-pending3/600/400', status: 'pending' },
 ];
 
+export const mockTransactions: WithId<Transaction>[] = [
+    { id: 'txn-1', userId: 'user-1', type: 'Top-up', amount: 2000, date: '2024-02-25', status: 'Completed' },
+    { id: 'txn-2', userId: 'user-1', bookingId: 'booking-1', type: 'Rent Payment', amount: 1808.00, date: '2024-05-01', status: 'Completed' },
+    { id: 'txn-3', userId: 'user-2', bookingId: 'booking-1', type: 'Payout', amount: 1808.00, date: '2024-05-01', status: 'Completed' },
+    { id: 'txn-4', userId: 'user-1', bookingId: 'booking-4', type: 'Rent Payment', amount: 2250, date: '2024-06-20', status: 'pending' },
+    { id: 'txn-5', userId: 'user-1', bookingId: 'booking-5', type: 'Rent Payment', amount: 2640, date: '2024-06-20', status: 'pending' },
+    { id: 'txn-6', userId: 'user-1', bookingId: 'booking-6', type: 'Rent Payment', amount: 562, date: '2024-06-20', status: 'pending' },
+];
+
 const now = Date.now();
 export const mockMessages: WithId<Message>[] = [
     { id: 'msg-1', conversationId: 'user-1_user-2', senderId: 'user-1', text: 'Hi Brian, is the Cozy Single Room at The Urban Nest available for May?', timestamp: new Date(now - 1000 * 60 * 60 * 120).toISOString() },
@@ -80,3 +89,4 @@ export type { User, Building, Room, Booking, Message, Transaction, Conversation,
     
 
     
+
