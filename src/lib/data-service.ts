@@ -1,8 +1,4 @@
 
-
-
-
-
 'use client';
 
 import {
@@ -16,7 +12,7 @@ import {
 } from '@/lib/placeholder-data';
 import type { Booking, Building, Conversation, Message, Room, User, WithId, Transaction, Notification } from '@/lib/types';
 import { format, differenceInCalendarDays } from 'date-fns';
-import { createXenditPayment, createXenditPayout } from './xendit-service';
+import { createXenditPayment, createXenditPayout, PaymentMethodType } from './xendit-service';
 
 // Create a mutable in-memory store for transactions to simulate a database
 let transactionsStore: WithId<Transaction>[] = [...mockTransactions];
@@ -494,19 +490,35 @@ export async function updateUserProfile(userId: string, profileData: Partial<Use
     throw new Error('User not found');
 }
 
-export async function createTopUpTransaction(userId: string, amount: number): Promise<WithId<Transaction>> {
-  // Call Xendit service to create the payment request
+export async function initiateTopUp(userId: string, amount: number, paymentMethodType: PaymentMethodType, channelCode: string) {
   try {
-    const xenditPayment = await createXenditPayment(amount * 15000, 'IDR', 'ID', 'ID_OVO'); // Example: amount in IDR, OVO
+    const xenditPayment = await createXenditPayment(amount * 15000, 'IDR', 'ID', channelCode, paymentMethodType);
     console.log('Xendit payment request initiated:', xenditPayment);
-    // In a real app, you would now use xenditPayment.actions to redirect the user
-    // or display a QR code. Then you'd wait for a webhook or poll for status.
+
+    // This is where you would handle different payment actions
+    // For now, we return the relevant data for the UI
+    const paymentAction = xenditPayment.actions?.[0];
+    if (paymentMethodType === 'VIRTUAL_ACCOUNT' && paymentAction?.channelProperties?.virtualAccountNumber) {
+        return { type: 'VA', vaNumber: paymentAction.channelProperties.virtualAccountNumber };
+    }
+    if (paymentMethodType === 'EWALLET' && paymentAction?.qrCode) {
+        return { type: 'EWALLET', qrCodeUrl: paymentAction.qrCode };
+    }
+    if (paymentMethodType === 'OTC' && paymentAction?.channelProperties?.paymentCode) {
+        return { type: 'OTC', paymentCode: paymentAction.channelProperties.paymentCode };
+    }
+
+    // Fallback or if no specific action is needed
+    return { type: 'SUCCESS' };
+
   } catch (error) {
     console.error('Failed to initiate Xendit top-up.', error);
     // Rethrow or handle the error as needed for the UI
     throw new Error('Payment provider is currently unavailable.');
   }
-  
+}
+
+export async function completeTopUpTransaction(userId: string, amount: number): Promise<WithId<Transaction>> {
   // For simulation purposes, we'll proceed as if the payment was successful immediately.
   const newTransaction: WithId<Transaction> = {
     id: `txn-topup-${Date.now()}`,

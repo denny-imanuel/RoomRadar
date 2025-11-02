@@ -4,10 +4,10 @@
 import { Xendit } from 'xendit-node';
 import type { 
     CreatePaymentRequest, 
-    PaymentRequest,
+    PaymentRequest as XenditPaymentRequest,
     CreatePayoutRequest,
-    Payout
-} from 'xendit-node';
+    Payout as XenditPayout
+} from 'xendit-node/payment_request/models';
 import { v4 as uuidv4 } from 'uuid';
 
 // Make sure to set XENDIT_SECRET_KEY in your .env file
@@ -17,27 +17,31 @@ const xenditClient = new Xendit({
 
 const { PaymentRequest: PRP, Payout: PayoutP } = xenditClient;
 
+export type PaymentMethodType = 'VIRTUAL_ACCOUNT' | 'EWALLET' | 'OTC';
+
 /**
  * Creates a Xendit Payment Request for top-ups.
  * @param amount - The amount to be paid.
  * @param currency - The currency of the payment (e.g., 'IDR', 'PHP').
  * @param country - The country code (e.g., 'ID', 'PH').
  * @param channelCode - The payment channel code from Xendit docs.
+ * @param paymentMethodType - The type of payment method.
  * @returns The created payment request object from Xendit.
  */
 export async function createXenditPayment(
     amount: number,
     currency: string,
     country: string,
-    channelCode: string
-): Promise<PaymentRequest> {
+    channelCode: string,
+    paymentMethodType: PaymentMethodType
+): Promise<XenditPaymentRequest> {
     try {
         const paymentRequestParams: CreatePaymentRequest = {
             amount,
             currency,
             country,
             paymentMethod: {
-                type: 'EWALLET', // or 'VIRTUAL_ACCOUNT', 'OTC' etc. depending on channel
+                type: paymentMethodType,
                 reusability: 'ONE_TIME_USE',
                 channelCode,
             },
@@ -58,7 +62,7 @@ export async function createXenditPayment(
  * @param id - The ID of the payment request to check.
  * @returns The payment request object with its current status.
  */
-export async function getXenditPaymentStatus(id: string): Promise<PaymentRequest> {
+export async function getXenditPaymentStatus(id: string): Promise<XenditPaymentRequest> {
     try {
         const payment = await PRP.getPaymentRequest({ id });
         console.log('Xendit Payment Request status:', payment);
@@ -81,7 +85,7 @@ export async function createXenditPayout(
     amount: number,
     channelCode: string,
     channelProperties: { [key: string]: any }
-): Promise<Payout> {
+): Promise<XenditPayout> {
     try {
         const payoutParams: CreatePayoutRequest = {
             referenceId: `payout-${uuidv4()}`,
@@ -107,7 +111,7 @@ export async function createXenditPayout(
  * @param id - The ID of the payout to check.
  * @returns The payout object with its current status.
  */
-export async function getXenditPayoutStatus(id: string): Promise<Payout> {
+export async function getXenditPayoutStatus(id: string): Promise<XenditPayout> {
     try {
         const payout = await PayoutP.getPayout({ id });
         console.log('Xendit Payout status:', payout);
