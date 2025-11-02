@@ -4,7 +4,7 @@ import type { User, Building, Room, Booking, Message, Transaction, Conversation,
 
 // --- MOCK DATA (Fully defined with IDs) ---
 
-export const mockUsers: WithId<Omit<User, 'id' | 'dateJoined'>>[] = [
+export const mockUsers: WithId<Omit<User, 'id' | 'dateJoined'>>[] & { password?: string }[] = [
   {
     id: 'user-1',
     name: 'Alex Tenant',
@@ -16,6 +16,7 @@ export const mockUsers: WithId<Omit<User, 'id' | 'dateJoined'>>[] = [
     profilePicture: 'https://i.pravatar.cc/150?u=alex-tenant',
     whatsapp: '+1234567890',
     role: 'tenant',
+    password: 'password',
   },
   {
     id: 'user-2',
@@ -28,6 +29,7 @@ export const mockUsers: WithId<Omit<User, 'id' | 'dateJoined'>>[] = [
     profilePicture: 'https://i.pravatar.cc/150?u=brian-landlord',
     whatsapp: '+1987654321',
     role: 'landlord',
+    password: 'password',
   },
 ];
 
@@ -50,6 +52,15 @@ export const mockBookings: WithId<Booking>[] = [
   { id: 'booking-4', userId: 'user-1', roomId: 'room-1', buildingId: 'building-1', buildingName: 'The Urban Nest', buildingAddress: '123 Main St, Anytown, USA', roomName: 'Cozy Single Room', checkIn: '2024-07-01', checkOut: '2024-07-31', totalPrice: 2250, imageUrl: 'https://picsum.photos/seed/bldg1-room1-pending1/600/400', status: 'pending' },
   { id: 'booking-5', userId: 'user-1', roomId: 'room-2', buildingId: 'building-1', buildingName: 'The Urban Nest', buildingAddress: '123 Main St, Anytown, USA', roomName: 'Spacious Double', checkIn: '2024-12-15', checkOut: '2025-01-15', totalPrice: 2640, imageUrl: 'https://picsum.photos/seed/bldg1-room2-pending2/600/400', status: 'pending' },
   { id: 'booking-6', userId: 'user-1', roomId: 'room-3', buildingId: 'building-2', buildingName: 'Seaside Villas', buildingAddress: '789 Ocean Blvd, Beachtown, USA', roomName: 'Garden View Single', checkIn: '2024-09-01', checkOut: '2024-09-08', totalPrice: 562, imageUrl: 'https://picsum.photos/seed/bldg3-room1-pending3/600/400', status: 'pending' },
+];
+
+export const mockTransactions: WithId<Transaction>[] = [
+    { id: 'txn-1', userId: 'user-1', type: 'Top-up', amount: 2000, date: '2024-02-25', status: 'Completed' },
+    { id: 'txn-2', userId: 'user-1', bookingId: 'booking-1', type: 'Rent Payment', amount: 1808.00, date: '2024-05-01', status: 'Completed' },
+    { id: 'txn-3', userId: 'user-2', bookingId: 'booking-1', type: 'Payout', amount: 1808.00, date: '2024-05-01', status: 'Completed' },
+    { id: 'txn-4', userId: 'user-1', bookingId: 'booking-4', type: 'Rent Payment', amount: 2250, date: '2024-06-20', status: 'pending' },
+    { id: 'txn-5', userId: 'user-1', bookingId: 'booking-5', type: 'Rent Payment', amount: 2640, date: '2024-06-20', status: 'pending' },
+    { id: 'txn-6', userId: 'user-1', bookingId: 'booking-6', type: 'Rent Payment', amount: 562, date: '2024-06-20', status: 'pending' },
 ];
 
 const now = Date.now();
@@ -78,3 +89,4 @@ export type { User, Building, Room, Booking, Message, Transaction, Conversation,
     
 
     
+

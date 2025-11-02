@@ -2,6 +2,7 @@
 
 
 
+
 'use client';
 
 import {
@@ -11,20 +12,14 @@ import {
   mockMessages,
   mockRooms,
   mockUsers,
+  mockTransactions,
 } from '@/lib/placeholder-data';
 import type { Booking, Building, Conversation, Message, Room, User, WithId, Transaction, Notification } from '@/lib/types';
 import { format, differenceInCalendarDays } from 'date-fns';
 import { createXenditPayment, createXenditPayout } from './xendit-service';
 
 // Create a mutable in-memory store for transactions to simulate a database
-let transactionsStore: WithId<Transaction>[] = [
-    { id: 'txn-1', userId: 'user-1', type: 'Top-up', amount: 2000, date: '2024-02-25', status: 'Completed' },
-    { id: 'txn-2', userId: 'user-1', bookingId: 'booking-1', type: 'Rent Payment', amount: 1808.00, date: '2024-05-01', status: 'Completed' },
-    { id: 'txn-3', userId: 'user-2', bookingId: 'booking-1', type: 'Payout', amount: 1808.00, date: '2024-05-01', status: 'Completed' },
-    { id: 'txn-4', userId: 'user-1', bookingId: 'booking-4', type: 'Rent Payment', amount: 2250, date: '2024-06-20', status: 'pending' },
-    { id: 'txn-5', userId: 'user-1', bookingId: 'booking-5', type: 'Rent Payment', amount: 2640, date: '2024-06-20', status: 'pending' },
-    { id: 'txn-6', userId: 'user-1', bookingId: 'booking-6', type: 'Rent Payment', amount: 562, date: '2024-06-20', status: 'pending' },
-];
+let transactionsStore: WithId<Transaction>[] = [...mockTransactions];
 
 let notificationsStore: WithId<Notification>[] = [
     {

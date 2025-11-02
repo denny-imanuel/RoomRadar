@@ -1,13 +1,21 @@
 // To run this script, execute: `npm run db:verify`
 
 import admin from 'firebase-admin';
-import { firebaseConfig } from '../src/firebase/config';
+import { firebaseConfig } from '@/firebase/config';
 import path from 'path';
-import { users as mockUsers, buildings as mockBuildings, rooms as mockRooms, bookings as mockBookings, messages as mockMessages, transactions as mockTransactions } from './populate-firestore';
+import { 
+    mockUsers, 
+    mockBuildings, 
+    mockRooms, 
+    mockBookings, 
+    mockMessages, 
+    mockTransactions,
+    mockConversations
+} from '@/lib/placeholder-data';
 
 // IMPORTANT: Download your service account key from the Firebase console
-// and save it as `serivceAccountKey.json` in the root of your project.
-const serviceAccount = require(path.resolve(process.cwd(), 'serivceAccountKey.json'));
+// and save it as `serviceAccountKey.json` in the root of your project.
+const serviceAccount = require(path.resolve(process.cwd(), 'serviceAccountKey.json'));
 
 // Safely initialize the Firebase app, preventing duplicate app errors
 if (!admin.apps.length) {
@@ -52,7 +60,7 @@ async function verifyAuthUsers() {
             hasError = true;
         }
     } catch (error) {
-        console.error('❌ ERROR: Could not list Auth users.', error);
+        console.error('⚠️ WARNING: Could not list Auth users. This is likely a permissions issue with your service account. Please ensure it has the "Firebase Authentication Admin" and "Service Usage Consumer" roles in GCP IAM.', error);
         hasError = true;
     }
 }
@@ -70,7 +78,7 @@ async function verifyAll() {
   await verifyCollectionCount('rooms', mockRooms.length, 'Rooms Collection');
   await verifyCollectionCount('bookings', mockBookings.length, 'Bookings Collection');
   await verifyCollectionCount('transactions', mockTransactions.length, 'Transactions Collection');
-  await verifyCollectionCount('conversations', 1, 'Conversations Collection');
+  await verifyCollectionCount('conversations', mockConversations.length, 'Conversations Collection');
   await verifyCollectionCount('messages', mockMessages.length, 'Messages Collection');
   
   console.log('\n--- Verification Complete ---');
