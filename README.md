@@ -1,8 +1,93 @@
-cd# Firebase Studio
+# Firebase Studio
 
 This is a NextJS starter in Firebase Studio.
 
 To get started, take a look at src/app/page.tsx.
+
+## Development Setup
+
+Follow these steps to set up your local development environment.
+
+### 1. Install Dependencies
+
+First, install the required npm packages:
+
+```bash
+npm install
+```
+
+### 2. Environment Variables
+
+The application requires API keys for Google Maps and Xendit.
+
+1.  Rename the `.env.local.example` file to `.env.local`.
+2.  Open the `.env.local` file and add your secret keys.
+
+```
+# .env.local
+
+# Get your key from the Google Cloud Console: https://console.cloud.google.com/google/maps-apis/
+NEXT_PUBLIC_GOOGLE_MAPS_API_KEY="YOUR_GOOGLE_MAPS_API_KEY"
+
+# Get your secret key from the Xendit Dashboard: https://dashboard.xendit.co/
+XENDIT_SECRET_KEY="YOUR_XENDIT_SECRET_KEY"
+```
+
+### 3. Populating Firestore with Mock Data
+
+The project includes a script to populate your Firestore database with mock data for users, buildings, and rooms. This is useful for development and testing.
+
+**Step 1: Get Firebase Admin Credentials**
+
+1.  Go to your [Firebase Console](https://console.firebase.google.com/).
+2.  Select your project, go to **Project settings** (gear icon) > **Service accounts**.
+3.  Click **"Generate new private key"** and confirm. A JSON file will be downloaded.
+4.  Rename this file to `serivceAccountKey.json`.
+5.  Move the `serivceAccountKey.json` file to the root directory of this project. **Important**: This file contains sensitive credentials. Do not commit it to version control. The `.gitignore` file is already configured to ignore it.
+
+**Step 2: Run the Population Script**
+
+Once the service account key is in place, run the following command from your terminal:
+
+```bash
+npm run db:populate
+```
+
+This will execute the script at `scripts/populate-firestore.ts`, which writes mock data to your Firestore database.
+
+### 4. Running for Development
+
+To start the development server, run:
+
+```bash
+npm run dev
+```
+
+The application will be available at `http://localhost:9002`.
+
+### 5. Running Tests
+
+To run the unit tests for the Xendit service, use the following command:
+
+```bash
+npm test
+```
+
+This will execute the tests in `src/lib/xendit-service.test.ts`, which use mocking to simulate API calls without needing live keys.
+
+### 6. Building and Deploying for Production
+
+To create a production build, run:
+
+```bash
+npm run build
+```
+
+After the build is complete, you can start the production server with:
+
+```bash
+npm start
+```
 
 ## Managing Users (Tenants and Landlords)
 
@@ -16,10 +101,6 @@ This is the standard method for new users to create an account. The application 
 2.  **Select a Role**: Choose whether the user is a "Tenant" or a "Landlord".
 3.  **Fill in the Details**: Complete the form with the user's first name, last name, email, and a secure password.
 4.  **Create Account**: Click the "Create Account" button.
-
-This process will automatically:
-- Create a new user in Firebase Authentication with the provided email and password.
-- Create a corresponding document in the `/users/{userId}` collection in Firestore, storing their name, email, and selected role.
 
 ### 2. Manually Adding Users via the Firebase Console (For Administrators)
 
@@ -50,27 +131,3 @@ If you need to add users manually as an administrator, you must perform two step
     - `phone` (String): Leave blank or add a phone number.
     - `profilePicture` (String): Leave blank or add a URL to a profile picture.
 6.  Click **"Save"**.
-
-The user can now log in with the email and password you created. They will be prompted to change their password on their first login if you've set that up in your application's logic.
-
-### 3. Populating Firestore with Mock Data
-
-The project includes a script to populate your Firestore database with mock data for users, buildings, and rooms. This is useful for development and testing.
-
-**Step 1: Get Firebase Admin Credentials**
-
-1.  Go to your [Firebase Console](https://console.firebase.google.com/).
-2.  Select your project, go to **Project settings** (gear icon) > **Service accounts**.
-3.  Click **"Generate new private key"** and confirm. A JSON file will be downloaded.
-4.  Rename this file to `serivceAccountKey.json`.
-5.  Move the `serivceAccountKey.json` file to the root directory of this project. **Important**: This file contains sensitive credentials. Do not commit it to version control. The `.gitignore` file is already configured to ignore it.
-
-**Step 2: Run the Population Script**
-
-Once the service account key is in place, run the following command from your terminal:
-
-```bash
-npm run db:populate
-```
-
-This will execute the script at `scripts/populate-firestore.ts`, which reads the mock data and writes it to your Firestore database, creating or overwriting collections for users, buildings, rooms, bookings, messages, and transactions.

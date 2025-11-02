@@ -1,5 +1,7 @@
 
 
+
+
 'use client';
 
 import {
@@ -12,6 +14,7 @@ import {
 } from '@/lib/placeholder-data';
 import type { Booking, Building, Conversation, Message, Room, User, WithId, Transaction, Notification } from '@/lib/types';
 import { format, differenceInCalendarDays } from 'date-fns';
+import { createXenditPayment, createXenditPayout } from './xendit-service';
 
 // Create a mutable in-memory store for transactions to simulate a database
 let transactionsStore: WithId<Transaction>[] = [
@@ -497,14 +500,26 @@ export async function updateUserProfile(userId: string, profileData: Partial<Use
 }
 
 export async function createTopUpTransaction(userId: string, amount: number): Promise<WithId<Transaction>> {
-  await new Promise(resolve => setTimeout(resolve, 200));
+  // Call Xendit service to create the payment request
+  try {
+    const xenditPayment = await createXenditPayment(amount * 15000, 'IDR', 'ID', 'ID_OVO'); // Example: amount in IDR, OVO
+    console.log('Xendit payment request initiated:', xenditPayment);
+    // In a real app, you would now use xenditPayment.actions to redirect the user
+    // or display a QR code. Then you'd wait for a webhook or poll for status.
+  } catch (error) {
+    console.error('Failed to initiate Xendit top-up.', error);
+    // Rethrow or handle the error as needed for the UI
+    throw new Error('Payment provider is currently unavailable.');
+  }
+  
+  // For simulation purposes, we'll proceed as if the payment was successful immediately.
   const newTransaction: WithId<Transaction> = {
     id: `txn-topup-${Date.now()}`,
     userId,
     type: 'Top-up',
     amount,
     date: new Date().toISOString().split('T')[0],
-    status: 'Completed',
+    status: 'Completed', // Simulating immediate success
   };
   transactionsStore.push(newTransaction);
   
@@ -523,14 +538,31 @@ export async function createTopUpTransaction(userId: string, amount: number): Pr
 }
 
 export async function createWithdrawalTransaction(userId: string, amount: number): Promise<WithId<Transaction>> {
-  await new Promise(resolve => setTimeout(resolve, 200));
+  // Call Xendit service to create the payout
+  try {
+    // Example payout details. In a real app, these would come from the user's input.
+    const channelCode = 'ID_BCA'; 
+    const channelProperties = {
+      account_holder_name: 'Mock User',
+      account_number: '1234567890'
+    };
+    const xenditPayout = await createXenditPayout(amount * 15000, channelCode, channelProperties); // Example: amount in IDR
+    console.log('Xendit payout request initiated:', xenditPayout);
+    // In a real app, you would monitor the status of this payout via webhooks or polling.
+  } catch (error) {
+    console.error('Failed to initiate Xendit withdrawal.', error);
+    // Rethrow or handle the error as needed for the UI
+    throw new Error('Withdrawal service is currently unavailable.');
+  }
+
+  // For simulation purposes, we'll proceed as if the withdrawal was successful immediately.
   const newTransaction: WithId<Transaction> = {
     id: `txn-withdraw-${Date.now()}`,
     userId,
     type: 'Withdrawal',
     amount,
     date: new Date().toISOString().split('T')[0],
-    status: 'Completed',
+    status: 'Completed', // Simulating immediate success
   };
   transactionsStore.push(newTransaction);
 
