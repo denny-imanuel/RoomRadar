@@ -1,6 +1,7 @@
 
 'use server';
 
+import 'dotenv/config'; // <-- ADDED THIS LINE
 import { Xendit } from 'xendit-node';
 import type { 
     CreatePaymentRequest, 
