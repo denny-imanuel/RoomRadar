@@ -60,7 +60,7 @@ async function verifyAuthUsers() {
             hasError = true;
         }
     } catch (error) {
-        console.error('❌ ERROR: Could not list Auth users.', error);
+        console.error('⚠️ WARNING: Could not list Auth users. This is likely a permissions issue with your service account. Please ensure it has the "Firebase Authentication Admin" and "Service Usage Consumer" roles in GCP IAM.', error);
         hasError = true;
     }
 }
