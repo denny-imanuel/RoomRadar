@@ -44,25 +44,58 @@ describe('Xendit Service', () => {
     });
 
     describe('createXenditPayment', () => {
-        it('should call createPaymentRequest with correct parameters', async () => {
-            const mockPaymentResponse = { id: 'pr-123', status: 'PENDING' };
+        it('should call createPaymentRequest with correct parameters for eWallet', async () => {
+            const mockPaymentResponse = { id: 'pr-ewallet-123', status: 'PENDING' };
             (mockPRP.createPaymentRequest as jest.Mock).mockResolvedValue(mockPaymentResponse);
 
-            const amount = 10000;
-            const currency = 'IDR';
-            const country = 'ID';
-            const channelCode = 'ID_OVO';
-
-            const result = await createXenditPayment(amount, currency, country, channelCode);
+            const result = await createXenditPayment(10000, 'IDR', 'ID', 'ID_OVO', 'EWALLET');
 
             expect(mockPRP.createPaymentRequest).toHaveBeenCalledWith({
-                amount,
-                currency,
-                country,
+                amount: 10000,
+                currency: 'IDR',
+                country: 'ID',
                 paymentMethod: {
                     type: 'EWALLET',
                     reusability: 'ONE_TIME_USE',
-                    channelCode,
+                    channelCode: 'ID_OVO',
+                },
+            });
+            expect(result).toEqual(mockPaymentResponse);
+        });
+
+        it('should call createPaymentRequest with correct parameters for Virtual Account', async () => {
+            const mockPaymentResponse = { id: 'pr-va-123', status: 'PENDING' };
+            (mockPRP.createPaymentRequest as jest.Mock).mockResolvedValue(mockPaymentResponse);
+
+            const result = await createXenditPayment(50000, 'IDR', 'ID', 'BCA', 'VIRTUAL_ACCOUNT');
+
+            expect(mockPRP.createPaymentRequest).toHaveBeenCalledWith({
+                amount: 50000,
+                currency: 'IDR',
+                country: 'ID',
+                paymentMethod: {
+                    type: 'VIRTUAL_ACCOUNT',
+                    reusability: 'ONE_TIME_USE',
+                    channelCode: 'BCA',
+                },
+            });
+            expect(result).toEqual(mockPaymentResponse);
+        });
+
+        it('should call createPaymentRequest with correct parameters for Retail Outlet (OTC)', async () => {
+            const mockPaymentResponse = { id: 'pr-otc-123', status: 'PENDING' };
+            (mockPRP.createPaymentRequest as jest.Mock).mockResolvedValue(mockPaymentResponse);
+
+            const result = await createXenditPayment(75000, 'IDR', 'ID', 'ALFAMART', 'OTC');
+
+            expect(mockPRP.createPaymentRequest).toHaveBeenCalledWith({
+                amount: 75000,
+                currency: 'IDR',
+                country: 'ID',
+                paymentMethod: {
+                    type: 'OTC',
+                    reusability: 'ONE_TIME_USE',
+                    channelCode: 'ALFAMART',
                 },
             });
             expect(result).toEqual(mockPaymentResponse);
@@ -70,7 +103,7 @@ describe('Xendit Service', () => {
 
         it('should throw an error if the API call fails', async () => {
             (mockPRP.createPaymentRequest as jest.Mock).mockRejectedValue(new Error('API Error'));
-            await expect(createXenditPayment(10000, 'IDR', 'ID', 'ID_OVO')).rejects.toThrow('Failed to create Xendit payment request.');
+            await expect(createXenditPayment(10000, 'IDR', 'ID', 'ID_OVO', 'EWALLET')).rejects.toThrow('Failed to create Xendit payment request.');
         });
     });
 
