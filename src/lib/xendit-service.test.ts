@@ -38,9 +38,9 @@ describe('Xendit Service', () => {
     beforeEach(() => {
         // Clear all mocks before each test
         (mockPRP.createPaymentRequest as jest.Mock).mockClear();
-        (mockPRP.getPaymentRequestByID as jest.Mock).mockClear();
+        (mockPRP.getPaymentRequest as jest.Mock).mockClear();
         (mockPayoutP.createPayout as jest.Mock).mockClear();
-        (mockPayoutP.getPayoutById as jest.Mock).mockClear();
+        (mockPayoutP.getPayout as jest.Mock).mockClear();
     });
 
     describe('createXenditPayment', () => {
@@ -77,12 +77,12 @@ describe('Xendit Service', () => {
     describe('getXenditPaymentStatus', () => {
         it('should call getPaymentRequest with the correct ID', async () => {
             const mockStatusResponse = { id: 'pr-123', status: 'SUCCESSFUL' };
-            (mockPRP.getPaymentRequestByID as jest.Mock).mockResolvedValue(mockStatusResponse);
+            (mockPRP.getPaymentRequest as jest.Mock).mockResolvedValue(mockStatusResponse);
 
-            const paymentRequestId = 'pr-123';
-            const result = await getXenditPaymentStatus(paymentRequestId);
+            const id = 'pr-123';
+            const result = await getXenditPaymentStatus(id);
 
-            expect(mockPRP.getPaymentRequestByID).toHaveBeenCalledWith({ paymentRequestId });
+            expect(mockPRP.getPaymentRequest).toHaveBeenCalledWith({ id });
             expect(result).toEqual(mockStatusResponse);
         });
     });
@@ -111,12 +111,12 @@ describe('Xendit Service', () => {
     describe('getXenditPayoutStatus', () => {
         it('should call getPayout with the correct ID', async () => {
             const mockStatusResponse = { id: 'payout-456', status: 'COMPLETED' };
-            (mockPayoutP.getPayoutById as jest.Mock).mockResolvedValue(mockStatusResponse);
+            (mockPayoutP.getPayout as jest.Mock).mockResolvedValue(mockStatusResponse);
 
-            const payoutId = 'payout-456';
-            const result = await getXenditPayoutStatus(payoutId);
+            const id = 'payout-456';
+            const result = await getXenditPayoutStatus(id);
 
-            expect(mockPayoutP.getPayoutById).toHaveBeenCalledWith({ payoutId });
+            expect(mockPayoutP.getPayout).toHaveBeenCalledWith({ id });
             expect(result).toEqual(mockStatusResponse);
         });
     });

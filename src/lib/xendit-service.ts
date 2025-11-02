@@ -55,12 +55,12 @@ export async function createXenditPayment(
 
 /**
  * Retrieves the status of a Xendit Payment Request.
- * @param paymentRequestId - The ID of the payment request to check.
+ * @param id - The ID of the payment request to check.
  * @returns The payment request object with its current status.
  */
-export async function getXenditPaymentStatus(paymentRequestId: string): Promise<PaymentRequest> {
+export async function getXenditPaymentStatus(id: string): Promise<PaymentRequest> {
     try {
-        const payment = await PRP.getPaymentRequestByID({ paymentRequestId });
+        const payment = await PRP.getPaymentRequest({ id });
         console.log('Xendit Payment Request status:', payment);
         return payment;
     } catch (error) {
@@ -104,12 +104,12 @@ export async function createXenditPayout(
 
 /**
  * Retrieves the status of a Xendit Payout.
- * @param payoutId - The ID of the payout to check.
+ * @param id - The ID of the payout to check.
  * @returns The payout object with its current status.
  */
-export async function getXenditPayoutStatus(payoutId: string): Promise<Payout> {
+export async function getXenditPayoutStatus(id: string): Promise<Payout> {
     try {
-        const payout = await PayoutP.getPayoutById({ payoutId });
+        const payout = await PayoutP.getPayout({ id });
         console.log('Xendit Payout status:', payout);
         return payout;
     } catch (error) {
