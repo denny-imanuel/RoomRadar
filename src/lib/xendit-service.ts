@@ -60,7 +60,7 @@ export async function createXenditPayment(
  */
 export async function getXenditPaymentStatus(paymentRequestId: string): Promise<PaymentRequest> {
     try {
-        const payment = await PRP.getPaymentRequest({ paymentRequestId });
+        const payment = await PRP.getPaymentRequestByID({ paymentRequestId });
         console.log('Xendit Payment Request status:', payment);
         return payment;
     } catch (error) {
@@ -109,7 +109,7 @@ export async function createXenditPayout(
  */
 export async function getXenditPayoutStatus(payoutId: string): Promise<Payout> {
     try {
-        const payout = await PayoutP.getPayout({ payoutId });
+        const payout = await PayoutP.getPayoutById({ payoutId });
         console.log('Xendit Payout status:', payout);
         return payout;
     } catch (error) {
