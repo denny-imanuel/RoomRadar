@@ -1,0 +1,46 @@
+{
+  "placeholderImages": [
+    {
+      "id": "map-background",
+      "description": "A stylized city map view.",
+      "imageUrl": "https://images.unsplash.com/photo-1476385822777-70eabacbd41f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxtYXAlMjBjaXR5fGVufDB8fHx8MTc2MTkzODQxOXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "map city"
+    },
+    {
+      "id": "room-1",
+      "description": "A modern, bright living room.",
+      "imageUrl": "https://images.unsplash.com/photo-1642632014636-285221957cf6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxtb2Rlcm4lMjBsaXZpbmd8ZW58MHx8fHwxNzYxOTIyNDA1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "modern living"
+    },
+    {
+      "id": "room-2",
+      "description": "A cozy bedroom with a large window.",
+      "imageUrl": "https://images.unsplash.com/photo-1703782498522-f9c2b9c1bc25?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjb3p5JTIwYmVkcm9vbXxlbnwwfHx8fDE3NjE4OTcwMDB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cozy bedroom"
+    },
+    {
+      "id": "room-3",
+      "description": "A stylish kitchen with new appliances.",
+      "imageUrl": "https://images.unsplash.com/photo-1761679296920-b48e07e9e267?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxzdHlsaXNoJTIwa2l0Y2hlbnxlbnwwfHx8fDE3NjE5NzExNTZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "stylish kitchen"
+    },
+    {
+      "id": "room-4",
+      "description": "A spacious apartment with city views.",
+      "imageUrl": "https://images.unsplash.com/photo-1756648955628-8a3c5721e52d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxhcGFydG1lbnQlMjBjaXR5fGVufDB8fHx8MTc2MTk3MTE1Nnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "apartment city"
+    },
+    {
+      "id": "building-1",
+      "description": "A modern apartment building exterior.",
+      "imageUrl": "https://images.unsplash.com/photo-1546349851-64285be8e9fa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxtb2Rlcm4lMjBidWlsZGluZ3xlbnwwfHx8fDE3NjE4ODg4MTJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "modern building"
+    },
+    {
+      "id": "building-2",
+      "description": "A classic brick apartment building.",
+      "imageUrl": "https://images.unsplash.com/photo-1571501679680-de32f1e7aad4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxicmljayUyMGJ1aWxkaW5nfGVufDB8fHx8MTc2MTkwOTQ2MHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "brick building"
+    }
+  ]
+}
