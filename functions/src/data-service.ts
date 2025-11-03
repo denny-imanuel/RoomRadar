@@ -450,7 +450,7 @@ export async function sendMessage(conversationId: string, senderId: string, text
 }
 
 export async function initiateTopUp(userId: string, amount: number, paymentMethodType: PaymentMethodType, channelCode: string) {
-  const xenditPayment = await createXenditPayment(amount * 15000, "IDR", "ID", channelCode, paymentMethodType);
+  const xenditPayment: any = await createXenditPayment(amount * 15000, "IDR", "ID", channelCode, paymentMethodType);
   
   if (!xenditPayment.actions || xenditPayment.actions.length === 0) {
     return { type: "SUCCESS" };

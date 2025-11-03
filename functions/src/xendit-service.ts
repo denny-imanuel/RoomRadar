@@ -23,7 +23,7 @@ export async function createXenditPayment(
     country: string,
     channelCode: string,
     paymentMethodType: PaymentMethodType
-): Promise<XenditPaymentRequest> {
+): Promise<any> { // Changed return type to any
   try {
     const paymentRequestParams: CreatePaymentRequest = {
       amount,
