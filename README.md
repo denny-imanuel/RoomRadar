@@ -1,3 +1,4 @@
+
 # Firebase Studio
 
 This is a NextJS starter in Firebase Studio.
@@ -10,10 +11,16 @@ Follow these steps to set up your local development environment.
 
 ### 1. Install Dependencies
 
-First, install the required npm packages:
+First, install the required npm packages for both the frontend and backend:
 
 ```bash
+# From the root directory
 npm install
+
+# From the functions directory
+cd functions
+npm install
+cd ..
 ```
 
 ### 2. Environment Variables
@@ -32,6 +39,7 @@ NEXT_PUBLIC_GOOGLE_MAPS_API_KEY="YOUR_GOOGLE_MAPS_API_KEY"
 # Get your secret key from the Xendit Dashboard: https://dashboard.xendit.co/
 XENDIT_SECRET_KEY="YOUR_XENDIT_SECRET_KEY"
 ```
+**Note:** You will also need to set the `XENDIT_SECRET_KEY` as a runtime environment variable for your deployed Firebase Functions.
 
 ### 3. Populating Firestore with Mock Data
 
@@ -55,9 +63,9 @@ npm run db:populate
 
 This will execute the script at `src/scripts/populate-firestore.ts`, which writes mock data to your Firestore database.
 
-### 4. Running for Development
+### 4. Running the Frontend (Next.js) for Development
 
-To start the development server, run:
+To start the development server for the frontend app, run:
 
 ```bash
 npm run dev
@@ -65,29 +73,47 @@ npm run dev
 
 The application will be available at `http://localhost:9002`.
 
-### 5. Running Tests
+### 5. Running the Backend (Firebase Functions) for Development
 
-To run the unit tests for the Xendit service, use the following command:
+To run the Firebase Functions locally for testing, use the Firebase Emulators.
 
+```bash
+cd functions
+npm run serve
+```
+This will start the functions emulator, and you can call your functions from your local frontend.
+
+### 6. Running Tests
+
+#### Frontend Tests
+To run the unit tests for the Xendit service (frontend version), use:
 ```bash
 npm test
 ```
 
-This will execute the tests in `src/lib/xendit-service.test.ts`, which use mocking to simulate API calls without needing live keys.
+#### Backend Tests
+To run the unit tests for the Firebase Functions, use:
+```bash
+cd functions
+npm test
+```
 
-### 6. Building and Deploying for Production
+### 7. Deploying to Production
 
-To create a production build, run:
+#### Deploying the Backend (Firebase Functions)
+To deploy your functions to Firebase:
+```bash
+cd functions
+npm run deploy
+```
 
+#### Building and Deploying the Frontend (Next.js)
+To create a production build of the Next.js app, run:
 ```bash
 npm run build
 ```
+After the build is complete, you can deploy the `out` directory to your hosting provider (e.g., Firebase Hosting).
 
-After the build is complete, you can start the production server with:
-
-```bash
-npm start
-```
 
 ## Managing Users (Tenants and Landlords)
 
