@@ -13,6 +13,7 @@ import {
 import type { Booking, Building, Conversation, Message, Room, User, WithId, Transaction, Notification } from '@/lib/types';
 import { format, differenceInCalendarDays } from 'date-fns';
 import { createXenditPayment, createXenditPayout, PaymentMethodType } from './xendit-service';
+import type { DateRange } from 'react-day-picker';
 
 // Create a mutable in-memory store for transactions to simulate a database
 let transactionsStore: WithId<Transaction>[] = [...mockTransactions];
@@ -217,6 +218,50 @@ export async function getNotificationsForUser(userId: string): Promise<WithId<No
 
 
 // --- WRITE OPERATIONS ---
+
+export function calculateBookingCosts(room: Room, date?: DateRange) {
+    const getDays = () => {
+        if (date?.from && date?.to) {
+            return Math.ceil((date.to.getTime() - date.from.getTime()) / (1000 * 60 * 60 * 24)) + 1;
+        }
+        return 0;
+    }
+
+    const calculateRentalPrice = () => {
+        const days = getDays();
+        if (days <= 0) return 0;
+        
+        // Simplistic pricing logic: daily price for now
+        const pricePerDay = room.priceDaily || (room.priceMonthly || 0) / 30;
+        return days * pricePerDay;
+    };
+
+    const calculateDeposit = () => {
+        const days = getDays();
+        if (days <= 0) return 0;
+        
+        if (days >= 28 && room.depositMonthly) return room.depositMonthly;
+        if (days >= 7 && room.depositWeekly) return room.depositWeekly;
+        if (room.depositDaily) return room.depositDaily;
+        if (room.depositMonthly) return room.depositMonthly;
+        return 0;
+    };
+
+    const days = getDays();
+    const rentalPrice = calculateRentalPrice();
+    const deposit = calculateDeposit();
+    const platformFee = rentalPrice * 0.20;
+    const totalBookingAmount = rentalPrice + deposit + platformFee;
+
+    return {
+        days,
+        rentalPrice,
+        deposit,
+        platformFee,
+        totalBookingAmount,
+    };
+}
+
 
 export async function createOrUpdateBuilding(buildingData: Partial<Building>, ownerId: string): Promise<WithId<Building>> {
     await new Promise(resolve => setTimeout(resolve, 200));

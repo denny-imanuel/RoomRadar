@@ -25,7 +25,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { useToast } from '@/hooks/use-toast';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { confirmBooking, getNewBookingPageData, getUserBalance } from '@/lib/data-service';
+import { confirmBooking, getNewBookingPageData, getUserBalance, calculateBookingCosts } from '@/lib/data-service';
 
 function NewBookingSkeleton() {
   return (
@@ -131,37 +131,14 @@ export default function NewBookingPage() {
     return parseISO(range.from);
   }) || [];
     
-  const getDays = () => {
-    if (date?.from && date?.to) {
-        return Math.ceil((date.to.getTime() - date.from.getTime()) / (1000 * 60 * 60 * 24)) + 1;
-    }
-    return 0;
-  }
+  const {
+    days,
+    rentalPrice,
+    deposit,
+    platformFee,
+    totalBookingAmount,
+  } = calculateBookingCosts(room, date);
 
-  const calculateRentalPrice = () => {
-    const days = getDays();
-    if (days <= 0) return 0;
-    
-    // Simplistic pricing logic: daily price for now
-    const pricePerDay = room.priceDaily || (room.priceMonthly || 0) / 30;
-    return days * pricePerDay;
-  };
-
-  const calculateDeposit = () => {
-    const days = getDays();
-    if (days <= 0) return 0;
-    
-    if (days >= 28 && room.depositMonthly) return room.depositMonthly;
-    if (days >= 7 && room.depositWeekly) return room.depositWeekly;
-    if (room.depositDaily) return room.depositDaily;
-    if (room.depositMonthly) return room.depositMonthly;
-    return 0;
-  };
-
-  const rentalPrice = calculateRentalPrice();
-  const deposit = calculateDeposit();
-  const platformFee = rentalPrice * 0.20;
-  const totalBookingAmount = rentalPrice + deposit + platformFee;
 
   const handleConfirmBooking = async () => {
     if (!user || !date?.from || !date?.to || !buildingId || !roomId) {
@@ -307,7 +284,7 @@ export default function NewBookingPage() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Rental Price ({getDays()} days)</span>
+                <span className="text-muted-foreground">Rental Price ({days} days)</span>
                 <span>${rentalPrice.toFixed(2)}</span>
               </div>
               <div className="flex justify-between">
