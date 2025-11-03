@@ -26,12 +26,16 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       if (storedUserString) {
         const storedUser = JSON.parse(storedUserString);
         // Re-fetch user data to ensure it's fresh
-        const freshUser = await getUserById(storedUser.id);
-        if (freshUser) {
-            setUser(freshUser);
-            sessionStorage.setItem('currentUser', JSON.stringify(freshUser));
+        if (storedUser && storedUser.id) {
+            const freshUser = await getUserById(storedUser.id);
+            if (freshUser) {
+                setUser(freshUser);
+                sessionStorage.setItem('currentUser', JSON.stringify(freshUser));
+            } else {
+                 logout(); // User not found in "DB", so log them out
+            }
         } else {
-             logout(); // User not found in "DB", so log them out
+            logout(); // Malformed user object in session, so log them out
         }
       } else {
         // For development, default to a mock user if no session
