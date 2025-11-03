@@ -1,4 +1,5 @@
 
+import "dotenv/config"; // Must be the first import to load .env
 import * as admin from "firebase-admin";
 import test from "firebase-functions-test";
 
@@ -12,7 +13,7 @@ import type { User, Building } from "./types";
 
 const firebaseTest = test({
   projectId: process.env.FIREBASE_PROJECT_ID,
-}, "serviceAccountKey.json");
+}, "../serviceAccountKey.json"); // Correct path to root directory
 
 // Mocking Firestore
 const mockGet = jest.fn();
