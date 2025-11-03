@@ -2,7 +2,7 @@
 import * as admin from "firebase-admin";
 import test from "firebase-functions-test";
 import { getUserById, createOrUpdateBuilding } from "./data-service";
-import type { User, Building, WithId } from "./types";
+import type { User, Building } from "./types";
 
 const firebaseTest = test({
   projectId: process.env.FIREBASE_PROJECT_ID,
