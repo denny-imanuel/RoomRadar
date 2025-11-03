@@ -1,35 +1,39 @@
 
 import * as admin from "firebase-admin";
-import * as test from "firebase-functions-test";
+import test from "firebase-functions-test";
 import { getUserById, createOrUpdateBuilding } from "./data-service";
-import type { User, Building } from "./types";
+import type { User, Building, WithId } from "./types";
 
 const firebaseTest = test({
   projectId: process.env.FIREBASE_PROJECT_ID,
 }, "serviceAccountKey.json");
 
 // Mocking Firestore
-const mockDoc = {
-  get: jest.fn(),
-  set: jest.fn(),
-  update: jest.fn(),
-  collection: jest.fn(() => ({
-    doc: mockDoc,
-    add: jest.fn().mockResolvedValue({ id: "new-doc-id", get: jest.fn().mockResolvedValue({ id: "new-doc-id", data: () => ({ name: "New Building" }) }) }),
-  })),
-};
+const mockGet = jest.fn();
+const mockSet = jest.fn();
+const mockUpdate = jest.fn();
+const mockAdd = jest.fn().mockResolvedValue({ 
+    id: "new-doc-id", 
+    get: jest.fn().mockResolvedValue({ 
+        exists: true,
+        id: "new-doc-id", 
+        data: () => ({ name: "New Building" }) 
+    }) 
+});
+const mockDoc = jest.fn(() => ({
+  get: mockGet,
+  set: mockSet,
+  update: mockUpdate,
+}));
+const mockCollection = jest.fn(() => ({
+  doc: mockDoc,
+  add: mockAdd,
+}));
 
-jest.spyOn(admin, "firestore", "get").mockImplementation(() => (() => ({
-  collection: (collectionName: string) => ({
-    doc: (docId: string) => ({
-      get: mockDoc.get,
-      set: mockDoc.set,
-      update: mockDoc.update,
-      collection: mockDoc.collection,
-    }),
-    add: mockDoc.collection("").add,
-  }),
-})) as any);
+jest.spyOn(admin, 'firestore').mockReturnValue({
+  collection: mockCollection,
+} as unknown as admin.firestore.Firestore);
+
 
 describe("Backend Data Service", () => {
   afterAll(() => {
@@ -43,7 +47,7 @@ describe("Backend Data Service", () => {
   describe("getUserById", () => {
     it("should return a user if found", async () => {
       const userData: User = { id: "user-1", name: "Test User", firstName: "Test", lastName: "User", email: "test@test.com", role: "tenant", dateJoined: "2024-01-01", avatarUrl: "" };
-      mockDoc.get.mockResolvedValue({
+      mockGet.mockResolvedValue({
         exists: true,
         id: "user-1",
         data: () => userData,
@@ -52,16 +56,18 @@ describe("Backend Data Service", () => {
       const user = await getUserById("user-1");
 
       expect(user).toEqual({ ...userData, id: "user-1" });
-      expect(mockDoc.get).toHaveBeenCalled();
+      expect(mockCollection).toHaveBeenCalledWith("users");
+      expect(mockDoc).toHaveBeenCalledWith("user-1");
+      expect(mockGet).toHaveBeenCalled();
     });
 
     it("should return undefined if user not found", async () => {
-      mockDoc.get.mockResolvedValue({ exists: false });
+      mockGet.mockResolvedValue({ exists: false });
 
       const user = await getUserById("non-existent-user");
 
       expect(user).toBeUndefined();
-      expect(mockDoc.get).toHaveBeenCalled();
+      expect(mockGet).toHaveBeenCalled();
     });
   });
 
@@ -74,7 +80,8 @@ describe("Backend Data Service", () => {
       
       const newBuilding = await createOrUpdateBuilding(buildingData, "owner-1");
 
-      expect(mockDoc.collection("").add).toHaveBeenCalledWith({
+      expect(mockCollection).toHaveBeenCalledWith("buildings");
+      expect(mockAdd).toHaveBeenCalledWith({
         ...buildingData,
         ownerId: "owner-1",
       });
@@ -87,14 +94,17 @@ describe("Backend Data Service", () => {
             id: "building-1",
             name: "Updated Building Name",
         };
-        mockDoc.get.mockResolvedValue({
+        mockGet.mockResolvedValue({
+            exists: true,
             id: "building-1",
             data: () => ({ name: "Updated Building Name", ownerId: "owner-1" })
         });
         
         await createOrUpdateBuilding(buildingData, "owner-1");
 
-        expect(mockDoc.update).toHaveBeenCalledWith({
+        expect(mockCollection).toHaveBeenCalledWith("buildings");
+        expect(mockDoc).toHaveBeenCalledWith("building-1");
+        expect(mockUpdate).toHaveBeenCalledWith({
             ...buildingData,
             ownerId: "owner-1",
         });
