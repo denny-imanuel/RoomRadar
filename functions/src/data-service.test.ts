@@ -1,6 +1,12 @@
 
 import * as admin from "firebase-admin";
 import test from "firebase-functions-test";
+
+// Initialize the Firebase Admin SDK for testing BEFORE other imports
+if (!admin.apps.length) {
+  admin.initializeApp();
+}
+
 import { getUserById, createOrUpdateBuilding } from "./data-service";
 import type { User, Building } from "./types";
 
