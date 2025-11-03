@@ -545,5 +545,3 @@ export async function markNotificationAsRead(userId: string, notificationId: str
   const doc = await notificationRef.get();
   return { id: doc.id, ...doc.data() } as WithId<Notification>;
 }
-
-    
