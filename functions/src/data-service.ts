@@ -14,6 +14,7 @@ import type {
 import { differenceInCalendarDays, format } from "date-fns";
 import type { DateRange } from "react-day-picker";
 import { createXenditPayment, createXenditPayout, PaymentMethodType } from "./xendit-service";
+import type { Timestamp } from "firebase-admin/firestore";
 
 const db = admin.firestore();
 
@@ -416,13 +417,15 @@ export async function updateUserProfile(userId: string, profileData: Partial<Use
 export async function sendMessage(conversationId: string, senderId: string, text: string): Promise<WithId<Message>> {
   const batch = db.batch();
   const messageRef = db.collection("messages").doc();
-  const newMessage: Omit<WithId<Message>, "id"> = {
+  
+  // This object is for writing to Firestore and uses the server timestamp
+  const newMessageForDb: Omit<WithId<Message>, "id" | "timestamp"> & { timestamp: admin.firestore.FieldValue } = {
     conversationId,
     senderId,
     text,
     timestamp: admin.firestore.FieldValue.serverTimestamp(),
   };
-  batch.set(messageRef, newMessage);
+  batch.set(messageRef, newMessageForDb);
 
   const conversationRef = db.collection("conversations").doc(conversationId);
   batch.update(conversationRef, {
@@ -434,9 +437,17 @@ export async function sendMessage(conversationId: string, senderId: string, text
   });
 
   await batch.commit();
-
-  // For optimistic update, return a client-compatible timestamp
-  return { id: messageRef.id, ...newMessage, timestamp: new Date().toISOString() } as WithId<Message>;
+  
+  // This object is returned to the client and uses a client-friendly ISO string
+  const optimisticMessage: WithId<Message> = {
+    id: messageRef.id,
+    conversationId,
+    senderId,
+    text,
+    timestamp: new Date().toISOString(),
+  };
+  
+  return optimisticMessage;
 }
 
 export async function initiateTopUp(userId: string, amount: number, paymentMethodType: PaymentMethodType, channelCode: string) {
