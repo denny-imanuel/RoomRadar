@@ -3,11 +3,31 @@ import "dotenv/config";
 import { Xendit } from "xendit-node";
 import type {
     PaymentRequest as XenditPaymentRequest,
-    CreatePaymentRequest,
     Payout as XenditPayout,
-    CreatePayoutRequest,
 } from "xendit-node";
 import { v4 as uuidv4 } from "uuid";
+
+// Custom interfaces to bypass faulty library types
+interface CreatePaymentRequest {
+    amount: number;
+    currency: string;
+    country: string;
+    paymentMethod: {
+        type: PaymentMethodType;
+        reusability: 'ONE_TIME_USE';
+        channelCode: string;
+    };
+}
+
+interface CreatePayoutRequest {
+    referenceId: string;
+    channelCode: string;
+    channelProperties: { [key: string]: any };
+    amount: number;
+    currency: string;
+    description: string;
+}
+
 
 const xenditClient = new Xendit({
   secretKey: process.env.XENDIT_SECRET_KEY || "",
