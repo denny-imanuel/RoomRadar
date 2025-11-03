@@ -2,11 +2,11 @@
 import "dotenv/config";
 import { Xendit } from "xendit-node";
 import type {
-    CreatePaymentRequest,
     PaymentRequest as XenditPaymentRequest,
-    CreatePayoutRequest,
+    CreatePaymentRequest,
     Payout as XenditPayout,
-} from "xendit-node/payment_request/models";
+    CreatePayoutRequest,
+} from "xendit-node";
 import { v4 as uuidv4 } from "uuid";
 
 const xenditClient = new Xendit({
@@ -46,7 +46,7 @@ export async function createXenditPayment(
 
 export async function getXenditPaymentStatus(id: string): Promise<XenditPaymentRequest> {
   try {
-    const payment = await PRP.getPaymentRequest({ id });
+    const payment = await PRP.getPaymentRequestByID({ id });
     return payment;
   } catch (error: any) {
     console.error("Error getting Xendit payment request status:", error.message);
@@ -79,7 +79,7 @@ export async function createXenditPayout(
 
 export async function getXenditPayoutStatus(id: string): Promise<XenditPayout> {
   try {
-    const payout = await PayoutP.getPayout({ id });
+    const payout = await PayoutP.getPayoutByID({ id });
     return payout;
   } catch (error: any) {
     console.error("Error getting Xendit payout status:", error.message);
