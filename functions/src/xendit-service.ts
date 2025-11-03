@@ -1,10 +1,6 @@
 
 import "dotenv/config";
 import { Xendit } from "xendit-node";
-import type {
-    PaymentRequest as XenditPaymentRequest,
-    Payout as XenditPayout,
-} from "xendit-node";
 import { v4 as uuidv4 } from "uuid";
 
 const xenditClient = new Xendit({
@@ -42,7 +38,7 @@ export async function createXenditPayment(
   }
 }
 
-export async function getXenditPaymentStatus(id: string): Promise<XenditPaymentRequest> {
+export async function getXenditPaymentStatus(id: string): Promise<any> {
   try {
     const payment = await PRP.getPaymentRequestByID({ paymentRequestId: id });
     return payment;
@@ -56,7 +52,7 @@ export async function createXenditPayout(
     amount: number,
     channelCode: string,
     channelProperties: { [key: string]: any }
-): Promise<XenditPayout> {
+): Promise<any> {
   try {
     const payoutParams = {
       referenceId: `payout-${uuidv4()}`,
@@ -75,7 +71,7 @@ export async function createXenditPayout(
   }
 }
 
-export async function getXenditPayoutStatus(id: string): Promise<XenditPayout> {
+export async function getXenditPayoutStatus(id: string): Promise<any> {
   try {
     const payout = await PayoutP.getPayoutById({ id });
     return payout;
