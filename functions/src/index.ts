@@ -37,9 +37,9 @@ export const getRoomById = onCall(dataService.getRoomById);
 export const getTenantBookings = onCall(dataService.getTenantBookings);
 export const getLandlordBookings = onCall(dataService.getLandlordBookings);
 export const getBookingDetails = onCall(dataService.getBookingDetails);
-export const getNewBookingPageData = onCall(async ({ buildingId, roomId }) => ({
-  building: await dataService.getBuildingById(buildingId),
-  room: await dataService.getRoomById(roomId),
+export const getNewBookingPageData = onCall(async (data: { buildingId: string, roomId: string }) => ({
+  building: await dataService.getBuildingById(data.buildingId),
+  room: await dataService.getRoomById(data.roomId),
 }));
 export const getConversationsForUser = onCall(dataService.getConversationsForUser);
 export const getMessagesForConversation = onCall(dataService.getMessagesForConversation);
@@ -48,15 +48,15 @@ export const getUserBalance = onCall(dataService.getUserBalance);
 export const getNotificationsForUser = onCall(dataService.getNotificationsForUser);
 
 // --- WRITE FUNCTIONS ---
-export const createOrUpdateBuilding = onCall(({ buildingData, ownerId }) => dataService.createOrUpdateBuilding(buildingData, ownerId));
-export const createOrUpdateRoom = onCall(({ roomData, buildingId, ownerId }) => dataService.createOrUpdateRoom(roomData, buildingId, ownerId));
+export const createOrUpdateBuilding = onCall((data: { buildingData: any, ownerId: string }) => dataService.createOrUpdateBuilding(data.buildingData, data.ownerId));
+export const createOrUpdateRoom = onCall((data: { roomData: any, buildingId: string, ownerId: string }) => dataService.createOrUpdateRoom(data.roomData, data.buildingId, data.ownerId));
 export const confirmBooking = onCall(dataService.confirmBooking);
 export const approveBooking = onCall(dataService.approveBooking);
 export const declineBooking = onCall(dataService.declineBooking);
 export const cancelBooking = onCall(dataService.cancelBooking);
-export const sendMessage = onCall(({ conversationId, senderId, text }) => dataService.sendMessage(conversationId, senderId, text));
-export const updateUserProfile = onCall(({ userId, profileData }) => dataService.updateUserProfile(userId, profileData));
-export const initiateTopUp = onCall(({ userId, amount, paymentMethodType, channelCode }) => dataService.initiateTopUp(userId, amount, paymentMethodType, channelCode));
-export const completeTopUpTransaction = onCall(({ userId, amount }) => dataService.completeTopUpTransaction(userId, amount));
-export const createWithdrawalTransaction = onCall(({ userId, amount }) => dataService.createWithdrawalTransaction(userId, amount));
-export const markNotificationAsRead = onCall(({ userId, notificationId }) => dataService.markNotificationAsRead(userId, notificationId));
+export const sendMessage = onCall((data: { conversationId: string, senderId: string, text: string }) => dataService.sendMessage(data.conversationId, data.senderId, data.text));
+export const updateUserProfile = onCall((data: { userId: string, profileData: any }) => dataService.updateUserProfile(data.userId, data.profileData));
+export const initiateTopUp = onCall((data: { userId: string, amount: number, paymentMethodType: any, channelCode: any }) => dataService.initiateTopUp(data.userId, data.amount, data.paymentMethodType, data.channelCode));
+export const completeTopUpTransaction = onCall((data: { userId: string, amount: number }) => dataService.completeTopUpTransaction(data.userId, data.amount));
+export const createWithdrawalTransaction = onCall((data: { userId: string, amount: number }) => dataService.createWithdrawalTransaction(data.userId, data.amount));
+export const markNotificationAsRead = onCall((data: { userId: string, notificationId: string }) => dataService.markNotificationAsRead(data.userId, data.notificationId));
