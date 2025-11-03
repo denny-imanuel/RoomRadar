@@ -148,7 +148,7 @@ export async function getUserTransactions(userId: string): Promise<WithId<Transa
 }
 
 export async function getUserBalance(userId: string): Promise<number> {
-  const snapshot = await db.collection("transactions").where("userId", "==", userId).where("status", "==", "Completed").get();
+  const snapshot = await db.collection("transactions").where("userId", "==", userId).where("status", "===", "Completed").get();
   const transactions = snapshot.docs.map((doc) => doc.data() as Transaction);
 
   return transactions.reduce((acc, txn) => {
@@ -221,18 +221,30 @@ export async function createOrUpdateBuilding(buildingData: Partial<Building>, ow
 
 export async function createOrUpdateRoom(roomData: Partial<Room>, buildingId: string, ownerId: string): Promise<WithId<Room>> {
   const collectionRef = db.collection("rooms");
-  const submissionData = {
-    ...roomData,
-    buildingId,
-    ownerId,
-    bookedDates: roomData.bookedDates?.map((range) => ({
-      from: format(new Date(range.from), "yyyy-MM-dd"),
-      to: range.to ? format(new Date(range.to), "yyyy-MM-dd") : undefined,
-    })),
-  };
 
-  if (roomData.id) {
-    const docRef = collectionRef.doc(roomData.id);
+  const { id, ...data } = roomData;
+  const submissionData: { [key: string]: any; } = {};
+
+  for (const key in data) {
+    if (data[key as keyof typeof data] !== undefined) {
+      submissionData[key] = data[key as keyof typeof data];
+    }
+  }
+
+  submissionData.buildingId = buildingId;
+  submissionData.ownerId = ownerId;
+
+  if (Array.isArray(roomData.bookedDates)) {
+    submissionData.bookedDates = roomData.bookedDates.map((range: any) => ({
+      from: format(new Date(range.from), "yyyy-MM-dd"),
+      to: range.to ? format(new Date(range.to), "yyyy-MM-dd") : null,
+    }));
+  } else {
+    submissionData.bookedDates = [];
+  }
+
+  if (id) {
+    const docRef = collectionRef.doc(id);
     await docRef.update(submissionData);
     const updatedDoc = await docRef.get();
     return { id: updatedDoc.id, ...updatedDoc.data() } as WithId<Room>;
@@ -242,6 +254,7 @@ export async function createOrUpdateRoom(roomData: Partial<Room>, buildingId: st
     return { id: newDoc.id, ...newDoc.data() } as WithId<Room>;
   }
 }
+
 
 export async function confirmBooking(bookingDetails: {
   userId: string;
@@ -284,7 +297,7 @@ export async function confirmBooking(bookingDetails: {
   const landlordNotification: Omit<WithId<Notification>, "id"> = {
     userId: building.ownerId,
     type: "new_booking",
-    message: `${tenant.name} has requested to book "${room.name}" in ${building.name}.`,
+    message: `${tenant.name} has requested to book \"${room.name}\" in ${building.name}.`,
     link: "/bookings",
     read: false,
     date: new Date().toISOString(),
@@ -486,7 +499,7 @@ export async function completeTopUpTransaction(userId: string, amount: number): 
   const notificationRef = db.collection("notifications").doc();
   const notification: Omit<WithId<Notification>, "id"> = {
     userId,
-    type: "top_up_success",
+    type: 'top_up_success',
     message: `You successfully topped up your wallet with $${amount.toFixed(2)}.`,
     link: "/wallet",
     read: false,

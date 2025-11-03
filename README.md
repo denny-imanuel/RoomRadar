@@ -33,21 +33,21 @@ To populate your Firestore database with mock data, you'll need a Firebase servi
 3.  Run the following command:
 
 ```bash
-npm run db:populate
+npm run deploy:database
 ```
 
 ### 2. Testing
 
-**Run All Tests:**
+**Run Frontend Tests:**
 
 ```bash
-npm test
+npm run test:frontend
 ```
 
 **Run Backend Tests:**
 
 ```bash
-npm test --prefix functions
+npm run test:backend
 ```
 
 ### 3. Deployment
@@ -65,5 +65,5 @@ npm run build
 **Deploy Backend (Firebase Functions):**
 
 ```bash
-npm run deploy --prefix functions
+npm run deploy:backend
 ```
