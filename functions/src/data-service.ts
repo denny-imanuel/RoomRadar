@@ -403,7 +403,7 @@ export async function sendMessage(conversationId: string, senderId: string, text
     conversationId,
     senderId,
     text,
-    timestamp: admin.firestore.FieldValue.serverTimestamp(),
+    timestamp: admin.firestore.FieldValue.serverTimestamp() as any, // Written to DB
   };
   batch.set(messageRef, newMessage);
 
@@ -418,19 +418,26 @@ export async function sendMessage(conversationId: string, senderId: string, text
 
   await batch.commit();
 
+  // For optimistic update, return a client-compatible timestamp
   return { id: messageRef.id, ...newMessage, timestamp: new Date().toISOString() };
 }
 
 export async function initiateTopUp(userId: string, amount: number, paymentMethodType: PaymentMethodType, channelCode: string) {
   const xenditPayment = await createXenditPayment(amount * 15000, "IDR", "ID", channelCode, paymentMethodType);
-  const paymentAction = xenditPayment.actions?.[0];
-  if (paymentMethodType === "VIRTUAL_ACCOUNT" && paymentAction?.channelProperties?.virtualAccountNumber) {
+  
+  if (!xenditPayment.actions || xenditPayment.actions.length === 0) {
+    return { type: "SUCCESS" };
+  }
+  
+  const paymentAction = xenditPayment.actions[0];
+  
+  if (paymentMethodType === "VIRTUAL_ACCOUNT" && paymentAction.action === 'AUTH' && paymentAction.channelProperties?.virtualAccountNumber) {
     return { type: "VA", vaNumber: paymentAction.channelProperties.virtualAccountNumber };
   }
-  if (paymentMethodType === "EWALLET" && paymentAction?.qrCode) {
+  if (paymentMethodType === "EWALLET" && paymentAction.action === 'QR_CODE' && paymentAction.qrCode) {
     return { type: "EWALLET", qrCodeUrl: paymentAction.qrCode };
   }
-  if (paymentMethodType === "OTC" && paymentAction?.channelProperties?.paymentCode) {
+  if (paymentMethodType === "OTC" && paymentAction.action === 'SUBMIT_FORM' && paymentAction.channelProperties?.paymentCode) {
     return { type: "OTC", paymentCode: paymentAction.channelProperties.paymentCode };
   }
   return { type: "SUCCESS" };
@@ -450,7 +457,6 @@ export async function completeTopUpTransaction(userId: string, amount: number): 
 
   const notificationRef = db.collection("notifications").doc();
   const notification: Omit<WithId<Notification>, "id"> = {
-    id: notificationRef.id,
     userId,
     type: "top_up_success",
     message: `You successfully topped up your wallet with $${amount.toFixed(2)}.`,
@@ -470,3 +476,5 @@ export async function markNotificationAsRead(userId: string, notificationId: str
   const doc = await notificationRef.get();
   return { id: doc.id, ...doc.data() } as WithId<Notification>;
 }
+
+    
