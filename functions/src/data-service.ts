@@ -14,6 +14,7 @@ import type {
 import { differenceInCalendarDays, format } from "date-fns";
 import type { DateRange } from "react-day-picker";
 import { createXenditPayment, PaymentMethodType } from "./xendit-service";
+import type { PaymentRequestAction } from "xendit-node/payment_request/models";
 
 const db = admin.firestore();
 
@@ -71,6 +72,23 @@ export async function getBookingById(id: string): Promise<WithId<Booking> | unde
   const doc = await db.collection("bookings").doc(id).get();
   return doc.exists ? { id: doc.id, ...doc.data() } as WithId<Booking> : undefined;
 }
+
+export async function getBookingDetails(bookingId: string) {
+    const booking = await getBookingById(bookingId);
+    if (!booking) return null;
+
+    const building = await getBuildingById(booking.buildingId);
+    const room = await getRoomById(booking.roomId);
+    const tenant = await getUserById(booking.userId);
+
+    if (!building || !room || !tenant) return null;
+    
+    const landlord = await getUserById(building.ownerId);
+    if (!landlord) return null;
+
+    return { booking, building, room, tenant, landlord };
+}
+
 
 export async function getTenantBookings(userId: string): Promise<WithId<Booking>[]> {
   const snapshot = await db.collection("bookings").where("userId", "==", userId).get();
@@ -403,7 +421,7 @@ export async function sendMessage(conversationId: string, senderId: string, text
     conversationId,
     senderId,
     text,
-    timestamp: admin.firestore.FieldValue.serverTimestamp() as any, // Written to DB
+    timestamp: admin.firestore.FieldValue.serverTimestamp(),
   };
   batch.set(messageRef, newMessage);
 
@@ -429,17 +447,18 @@ export async function initiateTopUp(userId: string, amount: number, paymentMetho
     return { type: "SUCCESS" };
   }
   
-  const paymentAction = xenditPayment.actions[0];
+  const paymentAction = xenditPayment.actions[0] as any; // Use 'as any' to bypass strict TS checks for this dynamic object
   
-  if (paymentMethodType === "VIRTUAL_ACCOUNT" && paymentAction.action === 'AUTH' && paymentAction.channelProperties?.virtualAccountNumber) {
-    return { type: "VA", vaNumber: paymentAction.channelProperties.virtualAccountNumber };
+  if (paymentMethodType === "VIRTUAL_ACCOUNT" && paymentAction?.channel_properties?.virtual_account_number) {
+    return { type: "VA", vaNumber: paymentAction.channel_properties.virtual_account_number };
   }
-  if (paymentMethodType === "EWALLET" && paymentAction.action === 'QR_CODE' && paymentAction.qrCode) {
-    return { type: "EWALLET", qrCodeUrl: paymentAction.qrCode };
+  if (paymentMethodType === "EWALLET" && paymentAction?.qr_code) {
+    return { type: "EWALLET", qrCodeUrl: paymentAction.qr_code };
   }
-  if (paymentMethodType === "OTC" && paymentAction.action === 'SUBMIT_FORM' && paymentAction.channelProperties?.paymentCode) {
-    return { type: "OTC", paymentCode: paymentAction.channelProperties.paymentCode };
+  if (paymentMethodType === "OTC" && paymentAction?.channel_properties?.payment_code) {
+    return { type: "OTC", paymentCode: paymentAction.channel_properties.payment_code };
   }
+  
   return { type: "SUCCESS" };
 }
 
@@ -469,6 +488,47 @@ export async function completeTopUpTransaction(userId: string, amount: number): 
   await batch.commit();
   return { id: transactionRef.id, ...newTransaction };
 }
+
+export async function createWithdrawalTransaction(userId: string, amount: number): Promise<WithId<Transaction>> {
+  // Call Xendit service to create the payout
+  try {
+    const channelCode = 'ID_BCA';
+    const channelProperties = {
+      account_holder_name: 'Mock User',
+      account_number: '1234567890'
+    };
+    await createXenditPayout(amount * 15000, channelCode, channelProperties);
+  } catch (error) {
+    console.error('Failed to initiate Xendit withdrawal.', error);
+    throw new Error('Withdrawal service is currently unavailable.');
+  }
+
+  const batch = db.batch();
+  const transactionRef = db.collection("transactions").doc();
+  const newTransaction: Omit<WithId<Transaction>, "id"> = {
+    userId,
+    type: 'Withdrawal',
+    amount,
+    date: new Date().toISOString().split('T')[0],
+    status: 'Completed',
+  };
+  batch.set(transactionRef, newTransaction);
+
+  const notificationRef = db.collection("notifications").doc();
+  const notification: Omit<WithId<Notification>, "id"> = {
+    userId,
+    type: 'withdrawal_success',
+    message: `You successfully withdrew $${amount.toFixed(2)} from your wallet.`,
+    link: '/wallet',
+    read: false,
+    date: new Date().toISOString(),
+  };
+  batch.set(notificationRef, notification);
+
+  await batch.commit();
+  return { id: transactionRef.id, ...newTransaction };
+}
+
 
 export async function markNotificationAsRead(userId: string, notificationId: string): Promise<WithId<Notification>> {
   const notificationRef = db.collection("notifications").doc(notificationId);
