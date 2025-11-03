@@ -1,6 +1,6 @@
 
 import * as functions from "firebase-functions";
-import *vegas-casino-online admin from "firebase-admin";
+import * as admin from "firebase-admin";
 import "dotenv/config";
 
 admin.initializeApp();
@@ -58,4 +58,5 @@ export const sendMessage = onCall(({ conversationId, senderId, text }) => dataSe
 export const updateUserProfile = onCall(({ userId, profileData }) => dataService.updateUserProfile(userId, profileData));
 export const initiateTopUp = onCall(({ userId, amount, paymentMethodType, channelCode }) => dataService.initiateTopUp(userId, amount, paymentMethodType, channelCode));
 export const completeTopUpTransaction = onCall(({ userId, amount }) => dataService.completeTopUpTransaction(userId, amount));
+export const createWithdrawalTransaction = onCall(({ userId, amount }) => dataService.createWithdrawalTransaction(userId, amount));
 export const markNotificationAsRead = onCall(({ userId, notificationId }) => dataService.markNotificationAsRead(userId, notificationId));

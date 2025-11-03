@@ -3,9 +3,7 @@ import "dotenv/config";
 import { Xendit } from "xendit-node";
 import type {
     PaymentRequest as XenditPaymentRequest,
-    CreatePaymentRequest,
     Payout as XenditPayout,
-    CreatePayoutRequest,
 } from "xendit-node";
 import { v4 as uuidv4 } from "uuid";
 
@@ -23,9 +21,9 @@ export async function createXenditPayment(
     country: string,
     channelCode: string,
     paymentMethodType: PaymentMethodType
-): Promise<any> { // Changed return type to any
+): Promise<any> { // Return any to avoid library type issues
   try {
-    const paymentRequestParams: CreatePaymentRequest = {
+    const paymentRequestParams = {
       amount,
       currency,
       country,
@@ -36,7 +34,7 @@ export async function createXenditPayment(
       },
     };
 
-    const payment = await PRP.createPaymentRequest(paymentRequestParams);
+    const payment = await PRP.createPaymentRequest(paymentRequestParams as any);
     return payment;
   } catch (error: any) {
     console.error("Error creating Xendit payment request:", error.message);
@@ -46,7 +44,7 @@ export async function createXenditPayment(
 
 export async function getXenditPaymentStatus(id: string): Promise<XenditPaymentRequest> {
   try {
-    const payment = await PRP.getPaymentRequestByID({ id });
+    const payment = await PRP.getPaymentRequestByID({ paymentRequestId: id });
     return payment;
   } catch (error: any) {
     console.error("Error getting Xendit payment request status:", error.message);
@@ -60,7 +58,7 @@ export async function createXenditPayout(
     channelProperties: { [key: string]: any }
 ): Promise<XenditPayout> {
   try {
-    const payoutParams: CreatePayoutRequest = {
+    const payoutParams = {
       referenceId: `payout-${uuidv4()}`,
       channelCode,
       channelProperties,
@@ -69,7 +67,7 @@ export async function createXenditPayout(
       description: "Withdrawal from RoomRadar Wallet",
     };
 
-    const payout = await PayoutP.createPayout(payoutParams);
+    const payout = await PayoutP.createPayout(payoutParams as any);
     return payout;
   } catch (error: any) {
     console.error("Error creating Xendit payout:", error.message);
@@ -79,7 +77,7 @@ export async function createXenditPayout(
 
 export async function getXenditPayoutStatus(id: string): Promise<XenditPayout> {
   try {
-    const payout = await PayoutP.getPayoutByID({ id });
+    const payout = await PayoutP.getPayoutById({ id });
     return payout;
   } catch (error: any) {
     console.error("Error getting Xendit payout status:", error.message);
