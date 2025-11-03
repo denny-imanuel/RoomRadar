@@ -10,9 +10,11 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "test": "jest",
-    "db:populate": "tsx src/scripts/populate-firestore.ts",
-    "db:verify": "tsx src/scripts/verify-firestore.ts"
+    "test:frontend": "jest",
+    "deploy:database": "tsx src/scripts/populate-firestore.ts",
+    "verify:database": "tsx src/scripts/verify-firestore.ts",
+    "verify:backend": "tsx src/scripts/verify-backend.ts",
+    "verify:backend-writes": "tsx src/scripts/verify-backend-writes.ts"
   },
   "dependencies": {
     "@genkit-ai/google-genai": "^1.20.0",

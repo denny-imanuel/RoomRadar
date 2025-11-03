@@ -4,6 +4,7 @@ import * as admin from "firebase-admin";
 import "dotenv/config";
 
 admin.initializeApp();
+admin.firestore().settings({ ignoreUndefinedProperties: true });
 
 import * as dataService from "./data-service";
 
