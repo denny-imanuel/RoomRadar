@@ -13,8 +13,7 @@ import type {
 } from "./types";
 import { differenceInCalendarDays, format } from "date-fns";
 import type { DateRange } from "react-day-picker";
-import { createXenditPayment, PaymentMethodType } from "./xendit-service";
-import type { PaymentRequestAction } from "xendit-node/payment_request/models";
+import { createXenditPayment, createXenditPayout, PaymentMethodType } from "./xendit-service";
 
 const db = admin.firestore();
 
@@ -437,7 +436,7 @@ export async function sendMessage(conversationId: string, senderId: string, text
   await batch.commit();
 
   // For optimistic update, return a client-compatible timestamp
-  return { id: messageRef.id, ...newMessage, timestamp: new Date().toISOString() };
+  return { id: messageRef.id, ...newMessage, timestamp: new Date().toISOString() } as WithId<Message>;
 }
 
 export async function initiateTopUp(userId: string, amount: number, paymentMethodType: PaymentMethodType, channelCode: string) {
@@ -449,14 +448,14 @@ export async function initiateTopUp(userId: string, amount: number, paymentMetho
   
   const paymentAction = xenditPayment.actions[0] as any; // Use 'as any' to bypass strict TS checks for this dynamic object
   
-  if (paymentMethodType === "VIRTUAL_ACCOUNT" && paymentAction?.channel_properties?.virtual_account_number) {
-    return { type: "VA", vaNumber: paymentAction.channel_properties.virtual_account_number };
+  if (paymentMethodType === "VIRTUAL_ACCOUNT" && paymentAction?.virtual_account_number) {
+    return { type: "VA", vaNumber: paymentAction.virtual_account_number };
   }
   if (paymentMethodType === "EWALLET" && paymentAction?.qr_code) {
     return { type: "EWALLET", qrCodeUrl: paymentAction.qr_code };
   }
-  if (paymentMethodType === "OTC" && paymentAction?.channel_properties?.payment_code) {
-    return { type: "OTC", paymentCode: paymentAction.channel_properties.payment_code };
+  if (paymentMethodType === "OTC" && paymentAction?.payment_code) {
+    return { type: "OTC", paymentCode: paymentAction.payment_code };
   }
   
   return { type: "SUCCESS" };
