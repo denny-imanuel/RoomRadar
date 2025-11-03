@@ -14,7 +14,6 @@ import type {
 import { differenceInCalendarDays, format } from "date-fns";
 import type { DateRange } from "react-day-picker";
 import { createXenditPayment, createXenditPayout, PaymentMethodType } from "./xendit-service";
-import type { Timestamp } from "firebase-admin/firestore";
 
 const db = admin.firestore();
 
