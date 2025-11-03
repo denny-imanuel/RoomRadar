@@ -7,28 +7,6 @@ import type {
 } from "xendit-node";
 import { v4 as uuidv4 } from "uuid";
 
-// Custom interfaces to bypass faulty library types
-interface CreatePaymentRequest {
-    amount: number;
-    currency: string;
-    country: string;
-    paymentMethod: {
-        type: PaymentMethodType;
-        reusability: 'ONE_TIME_USE';
-        channelCode: string;
-    };
-}
-
-interface CreatePayoutRequest {
-    referenceId: string;
-    channelCode: string;
-    channelProperties: { [key: string]: any };
-    amount: number;
-    currency: string;
-    description: string;
-}
-
-
 const xenditClient = new Xendit({
   secretKey: process.env.XENDIT_SECRET_KEY || "",
 });
@@ -43,9 +21,9 @@ export async function createXenditPayment(
     country: string,
     channelCode: string,
     paymentMethodType: PaymentMethodType
-): Promise<any> { // Changed return type to any
+): Promise<any> { // Return any to avoid library type issues
   try {
-    const paymentRequestParams: CreatePaymentRequest = {
+    const paymentRequestParams = {
       amount,
       currency,
       country,
@@ -56,7 +34,7 @@ export async function createXenditPayment(
       },
     };
 
-    const payment = await PRP.createPaymentRequest(paymentRequestParams);
+    const payment = await PRP.createPaymentRequest(paymentRequestParams as any);
     return payment;
   } catch (error: any) {
     console.error("Error creating Xendit payment request:", error.message);
@@ -80,7 +58,7 @@ export async function createXenditPayout(
     channelProperties: { [key: string]: any }
 ): Promise<XenditPayout> {
   try {
-    const payoutParams: CreatePayoutRequest = {
+    const payoutParams = {
       referenceId: `payout-${uuidv4()}`,
       channelCode,
       channelProperties,
@@ -89,7 +67,7 @@ export async function createXenditPayout(
       description: "Withdrawal from RoomRadar Wallet",
     };
 
-    const payout = await PayoutP.createPayout(payoutParams);
+    const payout = await PayoutP.createPayout(payoutParams as any);
     return payout;
   } catch (error: any) {
     console.error("Error creating Xendit payout:", error.message);
