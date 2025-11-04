@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
-import { onAuthStateChanged, getRedirectResult, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider } from "firebase/auth";
 import { auth, db } from '@/firebase/config';
 import { User } from '@/lib/types';
 import { getUserById } from '@/lib/data-service';
@@ -18,6 +18,7 @@ interface UserContextType {
   isUserLoading: boolean;
   login: (email, password) => Promise<void>;
   googleLogin: () => Promise<void>;
+  facebookLogin: () => Promise<void>;
   signup: (email, password, firstName, lastName, phone, role) => Promise<void>;
   logout: () => Promise<void>;
   refetchUser: () => void;
@@ -49,8 +50,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     router.push('/map');
   };
 
-  const googleLogin = async () => {
-    const provider = new GoogleAuthProvider();
+  const handleSocialLogin = async (provider) => {
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
@@ -69,7 +69,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
           firstName,
           lastName,
           name: user.displayName || user.email,
-          role: 'tenant', // Default role for new Google sign-ups
+          role: 'tenant', // Default role for new social sign-ups
           createdAt: new Date(),
         };
         await setDoc(userRef, newUser);
@@ -78,9 +78,19 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         router.push('/map'); // Redirect existing users to map page
       }
     } catch (error) {
-        console.error("Error during Google sign-in: ", error);
+        console.error("Error during social sign-in: ", error);
         throw error;
     }
+  }
+
+  const googleLogin = async () => {
+    const provider = new GoogleAuthProvider();
+    await handleSocialLogin(provider);
+  };
+
+  const facebookLogin = async () => {
+    const provider = new FacebookAuthProvider();
+    await handleSocialLogin(provider);
   };
 
   const signup = async (email, password, firstName, lastName, phone, role) => {
@@ -102,7 +112,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <UserContext.Provider value={{ user, isUserLoading, login, googleLogin, signup, logout, refetchUser }}>
+    <UserContext.Provider value={{ user, isUserLoading, login, googleLogin, facebookLogin, signup, logout, refetchUser }}>
       {children}
     </UserContext.Provider>
   );
