@@ -1,3 +1,4 @@
+
 'use client';
 
 import { Button } from '@/components/ui/button';
@@ -24,7 +25,6 @@ import { z } from 'zod';
 import Link from 'next/link';
 import { Building } from 'lucide-react';
 import { useUser } from '@/hooks/use-user';
-import { mockUsers } from '@/lib/placeholder-data';
 import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
 
@@ -46,7 +46,7 @@ const landlordCredentials = {
 };
 
 export default function LoginPage() {
-  const { login } = useUser();
+  const { login, googleLogin } = useUser();
   const { toast } = useToast();
   const router = useRouter();
 
@@ -58,20 +58,32 @@ export default function LoginPage() {
     },
   });
 
-  const onSubmit = (values: LoginFormValues) => {
-    const user = mockUsers.find(u => u.email === values.email);
-    if (user && values.password === 'password') { // Simplified password check for mock
-      login(user);
+  const onSubmit = async (values: LoginFormValues) => {
+    try {
+      await login(values.email, values.password);
       router.push('/map');
-    } else {
+    } catch (error) {
       toast({
         variant: 'destructive',
         title: 'Login Failed',
-        description: 'Invalid email or password.',
+        description: error.message,
       });
     }
   };
-  
+
+  const handleGoogleSignIn = async () => {
+    try {
+      await googleLogin();
+      router.push('/map');
+    } catch (error) {
+      toast({
+        variant: 'destructive',
+        title: 'Google Sign-in Failed',
+        description: error.message,
+      });
+    }
+  };
+
   const handleQuickLogin = (creds: typeof tenantCredentials) => {
     form.setValue('email', creds.email);
     form.setValue('password', creds.password);
@@ -135,6 +147,9 @@ export default function LoginPage() {
               <CardFooter className="flex flex-col gap-4">
                 <Button className="w-full" type="submit">
                   Log In
+                </Button>
+                <Button className="w-full" variant="outline" onClick={handleGoogleSignIn}>
+                  Sign in with Google
                 </Button>
                 <div className="text-center text-sm">
                   Don&apos;t have an account?{' '}

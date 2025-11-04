@@ -54,3 +54,231 @@
 [error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
 [debug] [2025-11-03T14:12:32.511Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
 [debug] [2025-11-03T14:12:32.511Z] > authorizing via signed-in user (denny.imanuel.111@gmail.com)
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-11-04T02:38:16.117Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-11-04T02:38:16.125Z] > authorizing via signed-in user (denny.imanuel.111@gmail.com)
+[debug] [2025-11-04T02:38:16.161Z] Checked if tokens are valid: false, expires at: 1762180121782
+[debug] [2025-11-04T02:38:16.162Z] Checked if tokens are valid: false, expires at: 1762180121782
+[debug] [2025-11-04T02:38:16.167Z] > refreshing access token with scopes: []
+[debug] [2025-11-04T02:38:16.175Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-11-04T02:38:16.180Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-11-04T02:38:16.258Z] Checked if tokens are valid: false, expires at: 1762180121782
+[debug] [2025-11-04T02:38:16.262Z] Checked if tokens are valid: false, expires at: 1762180121782
+[debug] [2025-11-04T02:38:16.262Z] > refreshing access token with scopes: []
+[debug] [2025-11-04T02:38:16.263Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-11-04T02:38:16.264Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-11-04T02:38:16.276Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-11-04T02:38:16.279Z] > authorizing via signed-in user (denny.imanuel.111@gmail.com)
+[debug] [2025-11-04T02:38:16.280Z] Checked if tokens are valid: false, expires at: 1762180121782
+[debug] [2025-11-04T02:38:16.283Z] Checked if tokens are valid: false, expires at: 1762180121782
+[debug] [2025-11-04T02:38:16.283Z] > refreshing access token with scopes: []
+[debug] [2025-11-04T02:38:16.284Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-11-04T02:38:16.284Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-11-04T02:38:16.305Z] Checked if tokens are valid: false, expires at: 1762180121782
+[debug] [2025-11-04T02:38:16.305Z] Checked if tokens are valid: false, expires at: 1762180121782
+[debug] [2025-11-04T02:38:16.305Z] > refreshing access token with scopes: []
+[debug] [2025-11-04T02:38:16.306Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-11-04T02:38:16.306Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-11-04T02:38:16.684Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-11-04T02:38:16.690Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-11-04T02:38:16.825Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebaseio.com [none]
+[debug] [2025-11-04T02:38:16.828Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebaseio.com x-goog-quota-user=projects/roomradar-60848015-ceb4e
+[debug] [2025-11-04T02:38:16.857Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-11-04T02:38:16.857Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-11-04T02:38:16.903Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebasedataconnect.googleapis.com [none]
+[debug] [2025-11-04T02:38:16.904Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebasedataconnect.googleapis.com x-goog-quota-user=projects/roomradar-60848015-ceb4e
+[debug] [2025-11-04T02:38:17.004Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-11-04T02:38:17.005Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-11-04T02:38:17.058Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebasedataconnect.googleapis.com [none]
+[debug] [2025-11-04T02:38:17.058Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebasedataconnect.googleapis.com x-goog-quota-user=projects/roomradar-60848015-ceb4e
+[debug] [2025-11-04T02:38:17.099Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-11-04T02:38:17.100Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-11-04T02:38:17.161Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebaseio.com [none]
+[debug] [2025-11-04T02:38:17.161Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebaseio.com x-goog-quota-user=projects/roomradar-60848015-ceb4e
+[debug] [2025-11-04T02:38:17.906Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebaseio.com 403
+[debug] [2025-11-04T02:38:17.907Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebaseio.com [omitted]
+[debug] [2025-11-04T02:38:18.033Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebasedataconnect.googleapis.com 200
+[debug] [2025-11-04T02:38:18.039Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebasedataconnect.googleapis.com [omitted]
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-11-04T02:38:18.084Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-11-04T02:38:18.086Z] > authorizing via signed-in user (denny.imanuel.111@gmail.com)
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-11-04T02:38:18.108Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-11-04T02:38:18.108Z] > authorizing via signed-in user (denny.imanuel.111@gmail.com)
+[debug] [2025-11-04T02:38:18.193Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebaseio.com 403
+[debug] [2025-11-04T02:38:18.194Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebaseio.com [omitted]
+[debug] [2025-11-04T02:38:18.253Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebasedataconnect.googleapis.com 200
+[debug] [2025-11-04T02:38:18.254Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebasedataconnect.googleapis.com [omitted]
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-11-04T02:38:27.520Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-11-04T02:38:27.522Z] > authorizing via signed-in user (denny.imanuel.111@gmail.com)
+[debug] [2025-11-04T02:38:27.532Z] Checked if tokens are valid: true, expires at: 1762227496100
+[debug] [2025-11-04T02:38:27.533Z] Checked if tokens are valid: true, expires at: 1762227496100
+[debug] [2025-11-04T02:38:27.568Z] Checked if tokens are valid: true, expires at: 1762227496100
+[debug] [2025-11-04T02:38:27.572Z] Checked if tokens are valid: true, expires at: 1762227496100
+[debug] [2025-11-04T02:38:27.572Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-11-04T02:38:27.573Z] > authorizing via signed-in user (denny.imanuel.111@gmail.com)
+[debug] [2025-11-04T02:38:27.578Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebasedataconnect.googleapis.com [none]
+[debug] [2025-11-04T02:38:27.578Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebasedataconnect.googleapis.com x-goog-quota-user=projects/roomradar-60848015-ceb4e
+[debug] [2025-11-04T02:38:27.582Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebaseio.com [none]
+[debug] [2025-11-04T02:38:27.583Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebaseio.com x-goog-quota-user=projects/roomradar-60848015-ceb4e
+[debug] [2025-11-04T02:38:27.589Z] Checked if tokens are valid: true, expires at: 1762227496100
+[debug] [2025-11-04T02:38:27.589Z] Checked if tokens are valid: true, expires at: 1762227496100
+[debug] [2025-11-04T02:38:27.595Z] Checked if tokens are valid: true, expires at: 1762227496100
+[debug] [2025-11-04T02:38:27.595Z] Checked if tokens are valid: true, expires at: 1762227496100
+[debug] [2025-11-04T02:38:27.596Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebasedataconnect.googleapis.com [none]
+[debug] [2025-11-04T02:38:27.596Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebasedataconnect.googleapis.com x-goog-quota-user=projects/roomradar-60848015-ceb4e
+[debug] [2025-11-04T02:38:27.604Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebaseio.com [none]
+[debug] [2025-11-04T02:38:27.604Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebaseio.com x-goog-quota-user=projects/roomradar-60848015-ceb4e
+[debug] [2025-11-04T02:38:28.689Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebaseio.com 403
+[debug] [2025-11-04T02:38:28.689Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebaseio.com [omitted]
+[debug] [2025-11-04T02:38:28.692Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebaseio.com 403
+[debug] [2025-11-04T02:38:28.692Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebaseio.com [omitted]
+[debug] [2025-11-04T02:38:28.716Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebasedataconnect.googleapis.com 200
+[debug] [2025-11-04T02:38:28.716Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebasedataconnect.googleapis.com [omitted]
+[debug] [2025-11-04T02:38:28.764Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebasedataconnect.googleapis.com 200
+[debug] [2025-11-04T02:38:28.764Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebasedataconnect.googleapis.com [omitted]
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-11-04T02:38:28.801Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-11-04T02:38:28.801Z] > authorizing via signed-in user (denny.imanuel.111@gmail.com)
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-11-04T02:38:28.812Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-11-04T02:38:28.813Z] > authorizing via signed-in user (denny.imanuel.111@gmail.com)
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-11-04T02:38:28.875Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-11-04T02:38:28.875Z] > authorizing via signed-in user (denny.imanuel.111@gmail.com)
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-11-04T02:38:28.881Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-11-04T02:38:28.881Z] > authorizing via signed-in user (denny.imanuel.111@gmail.com)
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-11-04T02:38:28.918Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-11-04T02:38:28.918Z] > authorizing via signed-in user (denny.imanuel.111@gmail.com)
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-11-04T02:38:28.921Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-11-04T02:38:28.921Z] > authorizing via signed-in user (denny.imanuel.111@gmail.com)
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-11-04T03:00:11.234Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-11-04T03:00:11.236Z] > authorizing via signed-in user (denny.imanuel.111@gmail.com)
+[debug] [2025-11-04T03:00:11.244Z] Checked if tokens are valid: true, expires at: 1762227496100
+[debug] [2025-11-04T03:00:11.245Z] Checked if tokens are valid: true, expires at: 1762227496100
+[debug] [2025-11-04T03:00:11.270Z] Checked if tokens are valid: true, expires at: 1762227496100
+[debug] [2025-11-04T03:00:11.271Z] Checked if tokens are valid: true, expires at: 1762227496100
+[debug] [2025-11-04T03:00:11.273Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-11-04T03:00:11.274Z] > authorizing via signed-in user (denny.imanuel.111@gmail.com)
+[debug] [2025-11-04T03:00:11.276Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebasedataconnect.googleapis.com [none]
+[debug] [2025-11-04T03:00:11.276Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebasedataconnect.googleapis.com x-goog-quota-user=projects/roomradar-60848015-ceb4e
+[debug] [2025-11-04T03:00:11.279Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebaseio.com [none]
+[debug] [2025-11-04T03:00:11.280Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebaseio.com x-goog-quota-user=projects/roomradar-60848015-ceb4e
+[debug] [2025-11-04T03:00:11.283Z] Checked if tokens are valid: true, expires at: 1762227496100
+[debug] [2025-11-04T03:00:11.284Z] Checked if tokens are valid: true, expires at: 1762227496100
+[debug] [2025-11-04T03:00:11.286Z] Checked if tokens are valid: true, expires at: 1762227496100
+[debug] [2025-11-04T03:00:11.286Z] Checked if tokens are valid: true, expires at: 1762227496100
+[debug] [2025-11-04T03:00:11.286Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebasedataconnect.googleapis.com [none]
+[debug] [2025-11-04T03:00:11.286Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebasedataconnect.googleapis.com x-goog-quota-user=projects/roomradar-60848015-ceb4e
+[debug] [2025-11-04T03:00:11.289Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebaseio.com [none]
+[debug] [2025-11-04T03:00:11.289Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebaseio.com x-goog-quota-user=projects/roomradar-60848015-ceb4e
+[debug] [2025-11-04T03:00:12.300Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebaseio.com 403
+[debug] [2025-11-04T03:00:12.300Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebaseio.com [omitted]
+[debug] [2025-11-04T03:00:12.338Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebaseio.com 403
+[debug] [2025-11-04T03:00:12.338Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebaseio.com [omitted]
+[debug] [2025-11-04T03:00:12.380Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebasedataconnect.googleapis.com 200
+[debug] [2025-11-04T03:00:12.380Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebasedataconnect.googleapis.com [omitted]
+[debug] [2025-11-04T03:00:12.411Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebasedataconnect.googleapis.com 200
+[debug] [2025-11-04T03:00:12.411Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebasedataconnect.googleapis.com [omitted]
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-11-04T03:00:12.435Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-11-04T03:00:12.436Z] > authorizing via signed-in user (denny.imanuel.111@gmail.com)
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-11-04T03:00:12.450Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-11-04T03:00:12.450Z] > authorizing via signed-in user (denny.imanuel.111@gmail.com)
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-11-04T03:00:12.507Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-11-04T03:00:12.507Z] > authorizing via signed-in user (denny.imanuel.111@gmail.com)
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-11-04T03:00:12.509Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-11-04T03:00:12.509Z] > authorizing via signed-in user (denny.imanuel.111@gmail.com)
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-11-04T03:00:12.540Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-11-04T03:00:12.541Z] > authorizing via signed-in user (denny.imanuel.111@gmail.com)
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-11-04T03:00:12.546Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-11-04T03:00:12.547Z] > authorizing via signed-in user (denny.imanuel.111@gmail.com)
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-11-04T03:07:08.791Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-11-04T03:07:08.793Z] > authorizing via signed-in user (denny.imanuel.111@gmail.com)
+[debug] [2025-11-04T03:07:08.807Z] Checked if tokens are valid: true, expires at: 1762227496100
+[debug] [2025-11-04T03:07:08.808Z] Checked if tokens are valid: true, expires at: 1762227496100
+[debug] [2025-11-04T03:07:08.822Z] Checked if tokens are valid: true, expires at: 1762227496100
+[debug] [2025-11-04T03:07:08.822Z] Checked if tokens are valid: true, expires at: 1762227496100
+[debug] [2025-11-04T03:07:08.823Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-11-04T03:07:08.823Z] > authorizing via signed-in user (denny.imanuel.111@gmail.com)
+[debug] [2025-11-04T03:07:08.825Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebasedataconnect.googleapis.com [none]
+[debug] [2025-11-04T03:07:08.826Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebasedataconnect.googleapis.com x-goog-quota-user=projects/roomradar-60848015-ceb4e
+[debug] [2025-11-04T03:07:08.831Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebaseio.com [none]
+[debug] [2025-11-04T03:07:08.832Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebaseio.com x-goog-quota-user=projects/roomradar-60848015-ceb4e
+[debug] [2025-11-04T03:07:08.835Z] Checked if tokens are valid: true, expires at: 1762227496100
+[debug] [2025-11-04T03:07:08.836Z] Checked if tokens are valid: true, expires at: 1762227496100
+[debug] [2025-11-04T03:07:08.845Z] Checked if tokens are valid: true, expires at: 1762227496100
+[debug] [2025-11-04T03:07:08.845Z] Checked if tokens are valid: true, expires at: 1762227496100
+[debug] [2025-11-04T03:07:08.846Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebasedataconnect.googleapis.com [none]
+[debug] [2025-11-04T03:07:08.846Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebasedataconnect.googleapis.com x-goog-quota-user=projects/roomradar-60848015-ceb4e
+[debug] [2025-11-04T03:07:08.851Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebaseio.com [none]
+[debug] [2025-11-04T03:07:08.852Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebaseio.com x-goog-quota-user=projects/roomradar-60848015-ceb4e
+[debug] [2025-11-04T03:07:09.901Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebaseio.com 403
+[debug] [2025-11-04T03:07:09.908Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebaseio.com [omitted]
+[debug] [2025-11-04T03:07:09.922Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebaseio.com 403
+[debug] [2025-11-04T03:07:09.922Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebaseio.com [omitted]
+[debug] [2025-11-04T03:07:09.993Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebasedataconnect.googleapis.com 200
+[debug] [2025-11-04T03:07:09.995Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebasedataconnect.googleapis.com [omitted]
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-11-04T03:07:10.032Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-11-04T03:07:10.033Z] > authorizing via signed-in user (denny.imanuel.111@gmail.com)
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-11-04T03:07:10.054Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-11-04T03:07:10.054Z] > authorizing via signed-in user (denny.imanuel.111@gmail.com)
+[debug] [2025-11-04T03:07:10.063Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebasedataconnect.googleapis.com 200
+[debug] [2025-11-04T03:07:10.064Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/roomradar-60848015-ceb4e/services/firebasedataconnect.googleapis.com [omitted]
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-11-04T03:07:10.199Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-11-04T03:07:10.199Z] > authorizing via signed-in user (denny.imanuel.111@gmail.com)
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-11-04T03:07:10.207Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-11-04T03:07:10.207Z] > authorizing via signed-in user (denny.imanuel.111@gmail.com)
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-11-04T03:07:10.238Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-11-04T03:07:10.239Z] > authorizing via signed-in user (denny.imanuel.111@gmail.com)
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-11-04T03:07:10.247Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-11-04T03:07:10.251Z] > authorizing via signed-in user (denny.imanuel.111@gmail.com)
