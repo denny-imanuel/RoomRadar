@@ -1,13 +1,8 @@
 
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
+import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
 export const firebaseConfig = {
   apiKey: "AIzaSyAliNBJRUrHVyNAr7Ekq9Pwg_kbxreuXr4",
   authDomain: "roomradar-60848015-ceb4e.firebaseapp.com",
@@ -17,7 +12,14 @@ export const firebaseConfig = {
   appId: "1:363287981451:web:cca117749499e021e1538e"
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
-export const db = getFirestore(app);
+// --- Singleton Pattern for Firebase Initialization ---
+console.log("[Firebase Config] Running. Current number of Firebase apps:", getApps().length);
+
+const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+// Standard way to get the auth instance
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+console.log("[Firebase Config] Firebase App object created. Project ID:", app.options.projectId);
+
+export { app, auth, db };
