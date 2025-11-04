@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
-import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider } from "firebase/auth";
+import { onAuthStateChanged, getRedirectResult, signInWithRedirect, GoogleAuthProvider, FacebookAuthProvider } from "firebase/auth";
 import { auth, db } from '@/firebase/config';
 import { User } from '@/lib/types';
 import { getUserById } from '@/lib/data-service';
@@ -33,17 +33,52 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-      if (firebaseUser) {
+      if (firebaseUser && !user) {
         const freshUser = await getUserById(firebaseUser.uid);
         setUser(freshUser);
-      } else {
-        setUser(null);
       }
       setIsUserLoading(false);
     });
 
+    const handleRedirectResult = async () => {
+      try {
+        const result = await getRedirectResult(auth);
+        if (result) {
+          const user = result.user;
+          const userRef = doc(db, "users", user.uid);
+          const userInDb = await getDoc(userRef);
+
+          if (!userInDb.exists()) {
+            // If user is new, create a new document in Firestore
+            const nameParts = user.displayName?.split(' ') || [];
+            const firstName = nameParts[0] || '';
+            const lastName = nameParts.slice(1).join(' ') || '';
+            
+            const newUser = {
+              id: user.uid,
+              email: user.email,
+              firstName,
+              lastName,
+              name: user.displayName || user.email,
+              role: 'tenant', // Default role for new social sign-ups
+              createdAt: new Date(),
+            };
+            await setDoc(userRef, newUser);
+            setUser(newUser as User);
+            router.push('/profile'); // Redirect new users to profile page
+          } else {
+            setUser(userInDb.data() as User);
+            router.push('/map'); // Redirect existing users to map page
+          }
+        }
+      } catch (error) {
+        console.error("Error during social sign-in redirect: ", error);
+      }
+    };
+
+    handleRedirectResult();
     return () => unsubscribe();
-  }, []);
+  }, [router, user]);
 
   const login = async (email, password) => {
     await signInWithEmail(email, password);
@@ -51,36 +86,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const handleSocialLogin = async (provider) => {
-    try {
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-      const userRef = doc(db, "users", user.uid);
-      const userInDb = await getDoc(userRef);
-
-      if (!userInDb.exists()) {
-        // If user is new, create a new document in Firestore
-        const nameParts = user.displayName?.split(' ') || [];
-        const firstName = nameParts[0] || '';
-        const lastName = nameParts.slice(1).join(' ') || '';
-        
-        const newUser = {
-          id: user.uid,
-          email: user.email,
-          firstName,
-          lastName,
-          name: user.displayName || user.email,
-          role: 'tenant', // Default role for new social sign-ups
-          createdAt: new Date(),
-        };
-        await setDoc(userRef, newUser);
-        router.push('/profile'); // Redirect new users to profile page
-      } else {
-        router.push('/map'); // Redirect existing users to map page
-      }
-    } catch (error) {
-        console.error("Error during social sign-in: ", error);
-        throw error;
-    }
+    await signInWithRedirect(auth, provider);
   }
 
   const googleLogin = async () => {
@@ -100,6 +106,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
   const logout = async () => {
     await signOutUser();
+    setUser(null);
     router.push('/login');
   };
 
