@@ -11,7 +11,6 @@ export type User = {
   profilePicture?: string;
   email: string;
   phone?: string;
-  whatsapp?: string;
   role: 'tenant' | 'landlord';
   dateJoined: string;
 };

@@ -18,7 +18,7 @@ interface UserContextType {
   isUserLoading: boolean;
   login: (email, password) => Promise<void>;
   googleLogin: () => Promise<void>;
-  signup: (email, password) => Promise<void>;
+  signup: (email, password, firstName, lastName, phone, role) => Promise<void>;
   logout: () => Promise<void>;
   refetchUser: () => void;
 }
@@ -77,8 +77,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     await signInWithGoogle();
   };
 
-  const signup = async (email, password) => {
-    await signUpWithEmail(email, password);
+  const signup = async (email, password, firstName, lastName, phone, role) => {
+    await signUpWithEmail(email, password, firstName, lastName, phone, role);
   };
 
   const logout = async () => {

@@ -22,12 +22,16 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import Link from 'next/link';
-import { Building } from 'lucide-react';
+import { Building, User, Briefcase } from 'lucide-react';
 import { useUser } from '@/hooks/use-user';
 import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 const formSchema = z.object({
+  firstName: z.string().min(1, { message: 'First name is required.' }),
+  lastName: z.string().min(1, { message: 'Last name is required.' }),
+  phone: z.string().min(1, { message: 'Phone number is required.' }),
   email: z.string().email({ message: 'Please enter a valid email.' }),
   password: z.string().min(6, { message: 'Password must be at least 6 characters.' }),
 });
@@ -38,10 +42,14 @@ export default function SignUpPage() {
   const { signup, googleLogin } = useUser();
   const { toast } = useToast();
   const router = useRouter();
+  const [role, setRole] = useState<'tenant' | 'landlord'>('tenant');
 
   const form = useForm<SignUpFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      firstName: '',
+      lastName: '',
+      phone: '',
       email: '',
       password: '',
     },
@@ -49,7 +57,7 @@ export default function SignUpPage() {
 
   const onSubmit = async (values: SignUpFormValues) => {
     try {
-      await signup(values.email, values.password);
+      await signup(values.email, values.password, values.firstName, values.lastName, values.phone, role);
       router.push('/map');
       toast({
         title: 'Sign Up Successful',
@@ -96,14 +104,73 @@ export default function SignUpPage() {
         </div>
         <Card>
           <CardHeader>
-            <CardTitle>Sign Up</CardTitle>
-            <CardDescription>
+            <CardTitle className="text-center">Sign Up as a {role}</CardTitle>
+            <div className="flex gap-4 mb-4">
+              <Button
+                variant={role === 'tenant' ? 'default' : 'outline'}
+                className="w-full flex-col h-24"
+                onClick={() => setRole('tenant')}
+              >
+                <User className="h-8 w-8 mb-2" />
+                <span>Tenant</span>
+              </Button>
+              <Button
+                variant={role === 'landlord' ? 'default' : 'outline'}
+                className="w-full flex-col h-24"
+                onClick={() => setRole('landlord')}
+              >
+                <Briefcase className="h-8 w-8 mb-2" />
+                <span>Landlord</span>
+              </Button>
+            </div>
+            <CardDescription className="text-center">
               Enter your details to create your account.
             </CardDescription>
           </CardHeader>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <CardContent className="space-y-4">
+                <div className="flex gap-4">
+                  <FormField
+                    control={form.control}
+                    name="firstName"
+                    render={({ field }) => (
+                      <FormItem className="w-1/2">
+                        <FormLabel>First Name</FormLabel>
+                        <FormControl>
+                          <Input placeholder="John" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="lastName"
+                    render={({ field }) => (
+                      <FormItem className="w-1/2">
+                        <FormLabel>Last Name</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Doe" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <FormField
+                  control={form.control}
+                  name="phone"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Phone Number</FormLabel>
+                      <FormControl>
+                        <Input placeholder="+1234567890" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
                 <FormField
                   control={form.control}
                   name="email"

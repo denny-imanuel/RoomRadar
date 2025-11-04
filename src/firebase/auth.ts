@@ -6,11 +6,10 @@ import {
   signInWithRedirect,
   signOut 
 } from "firebase/auth";
-import { auth } from './config';
-import { db } from './config';
+import { auth, db } from './config';
 import { doc, getDoc, setDoc } from "firebase/firestore";
 
-export const signUpWithEmail = async (email, password) => {
+export const signUpWithEmail = async (email, password, firstName, lastName, phone, role) => {
   try {
     const result = await createUserWithEmailAndPassword(auth, email, password);
     const user = result.user;
@@ -21,8 +20,11 @@ export const signUpWithEmail = async (email, password) => {
       const newUser = {
         id: user.uid,
         email: user.email,
-        name: user.email, // Default name to email
-        role: 'tenant', // Default role
+        firstName: firstName,
+        lastName: lastName,
+        name: `${firstName} ${lastName}`,
+        phone: phone,
+        role: role, 
         createdAt: new Date(),
       };
       await setDoc(userRef, newUser);
