@@ -25,7 +25,6 @@ import Link from 'next/link';
 import { Building, User, Briefcase } from 'lucide-react';
 import { useUser } from '@/hooks/use-user';
 import { useToast } from '@/hooks/use-toast';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 const formSchema = z.object({
@@ -39,9 +38,8 @@ const formSchema = z.object({
 type SignUpFormValues = z.infer<typeof formSchema>;
 
 export default function SignUpPage() {
-  const { signup, googleLogin } = useUser();
+  const { signup } = useUser();
   const { toast } = useToast();
-  const router = useRouter();
   const [role, setRole] = useState<'tenant' | 'landlord'>('tenant');
 
   const form = useForm<SignUpFormValues>({
@@ -58,7 +56,6 @@ export default function SignUpPage() {
   const onSubmit = async (values: SignUpFormValues) => {
     try {
       await signup(values.email, values.password, values.firstName, values.lastName, values.phone, role);
-      router.push('/map');
       toast({
         title: 'Sign Up Successful',
         description: "Welcome! You're now logged in.",
@@ -67,24 +64,7 @@ export default function SignUpPage() {
       toast({
         variant: 'destructive',
         title: 'Sign Up Failed',
-        description: error.message,
-      });
-    }
-  };
-
-  const handleGoogleSignIn = async () => {
-    try {
-      await googleLogin();
-      router.push('/map');
-      toast({
-        title: 'Sign In Successful',
-        description: "Welcome! You're now logged in with Google.",
-      });
-    } catch (error) {
-      toast({
-        variant: 'destructive',
-        title: 'Google Sign-in Failed',
-        description: error.message,
+        description: (error as Error).message,
       });
     }
   };
@@ -205,9 +185,6 @@ export default function SignUpPage() {
               <CardFooter className="flex flex-col gap-4">
                 <Button className="w-full" type="submit">
                   Sign Up
-                </Button>
-                <Button className="w-full" variant="outline" onClick={handleGoogleSignIn}>
-                  Sign up with Google
                 </Button>
                 <div className="text-center text-sm">
                   Already have an account?{' '}

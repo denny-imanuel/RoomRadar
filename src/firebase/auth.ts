@@ -3,7 +3,7 @@ import {
   createUserWithEmailAndPassword, 
   signInWithEmailAndPassword, 
   GoogleAuthProvider, 
-  signInWithRedirect,
+  signInWithPopup,
   signOut 
 } from "firebase/auth";
 import { auth, db } from './config';
@@ -49,7 +49,8 @@ export const signInWithEmail = async (email, password) => {
 export const signInWithGoogle = async () => {
   const provider = new GoogleAuthProvider();
   try {
-    await signInWithRedirect(auth, provider);
+    const result = await signInWithPopup(auth, provider);
+    return result;
   } catch (error) {
     console.error("Error signing in with Google: ", error);
     throw error;

@@ -1,4 +1,3 @@
-
 'use client';
 
 import { Button } from '@/components/ui/button';
@@ -66,7 +65,7 @@ export default function LoginPage() {
       toast({
         variant: 'destructive',
         title: 'Login Failed',
-        description: error.message,
+        description: (error as Error).message,
       });
     }
   };
@@ -74,12 +73,11 @@ export default function LoginPage() {
   const handleGoogleSignIn = async () => {
     try {
       await googleLogin();
-      router.push('/map');
     } catch (error) {
       toast({
         variant: 'destructive',
         title: 'Google Sign-in Failed',
-        description: error.message,
+        description: (error as Error).message,
       });
     }
   };
@@ -149,7 +147,7 @@ export default function LoginPage() {
                   Log In
                 </Button>
                 <Button className="w-full" variant="outline" onClick={handleGoogleSignIn}>
-                  Sign in with Google
+                  Continue with Google
                 </Button>
                 <div className="text-center text-sm">
                   Don&apos;t have an account?{' '}

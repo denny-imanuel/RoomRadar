@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
-import { onAuthStateChanged, getRedirectResult } from "firebase/auth";
+import { onAuthStateChanged, getRedirectResult, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth, db } from '@/firebase/config';
 import { User } from '@/lib/types';
 import { getUserById } from '@/lib/data-service';
@@ -9,9 +9,9 @@ import { doc, getDoc, setDoc } from "firebase/firestore";
 import { 
   signInWithEmail, 
   signUpWithEmail, 
-  signInWithGoogle, 
   signOutUser 
 } from '@/firebase/auth';
+import { useRouter } from 'next/navigation';
 
 interface UserContextType {
   user: User | null;
@@ -28,34 +28,9 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isUserLoading, setIsUserLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
-    const handleRedirect = async () => {
-      try {
-        const result = await getRedirectResult(auth);
-        if (result) {
-          const user = result.user;
-          const userRef = doc(db, "users", user.uid);
-          const userInDb = await getDoc(userRef);
-
-          if (!userInDb.exists()) {
-            const newUser = {
-              id: user.uid,
-              email: user.email,
-              name: user.displayName || user.email, // Default name to email
-              role: 'tenant', // Default role
-              createdAt: new Date(),
-            };
-            await setDoc(userRef, newUser);
-          }
-        }
-      } catch (error) {
-        console.error("Error handling redirect result: ", error);
-      }
-    };
-
-    handleRedirect();
-
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
         const freshUser = await getUserById(firebaseUser.uid);
@@ -71,18 +46,51 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
   const login = async (email, password) => {
     await signInWithEmail(email, password);
+    router.push('/map');
   };
 
   const googleLogin = async () => {
-    await signInWithGoogle();
+    const provider = new GoogleAuthProvider();
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      const userRef = doc(db, "users", user.uid);
+      const userInDb = await getDoc(userRef);
+
+      if (!userInDb.exists()) {
+        // If user is new, create a new document in Firestore
+        const nameParts = user.displayName?.split(' ') || [];
+        const firstName = nameParts[0] || '';
+        const lastName = nameParts.slice(1).join(' ') || '';
+        
+        const newUser = {
+          id: user.uid,
+          email: user.email,
+          firstName,
+          lastName,
+          name: user.displayName || user.email,
+          role: 'tenant', // Default role for new Google sign-ups
+          createdAt: new Date(),
+        };
+        await setDoc(userRef, newUser);
+        router.push('/profile'); // Redirect new users to profile page
+      } else {
+        router.push('/map'); // Redirect existing users to map page
+      }
+    } catch (error) {
+        console.error("Error during Google sign-in: ", error);
+        throw error;
+    }
   };
 
   const signup = async (email, password, firstName, lastName, phone, role) => {
     await signUpWithEmail(email, password, firstName, lastName, phone, role);
+    router.push('/map');
   };
 
   const logout = async () => {
     await signOutUser();
+    router.push('/login');
   };
 
   const refetchUser = async () => {
